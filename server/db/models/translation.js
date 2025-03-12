@@ -1,4 +1,5 @@
 'use strict';
+
 const { Model, Transaction } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {

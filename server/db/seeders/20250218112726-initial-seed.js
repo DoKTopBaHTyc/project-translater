@@ -32,6 +32,7 @@ module.exports = {
       { name: 'Movies', createdAt: new Date(), updatedAt: new Date() },
     ]);
 
+
     await queryInterface.bulkInsert('Words', [
 
       {
@@ -105,7 +106,7 @@ module.exports = {
         updatedAt: new Date(),
       },
 
-
+  
       {
         name: 'Computer',
         userId: 1,
@@ -320,7 +321,7 @@ module.exports = {
         updatedAt: new Date(),
       },
 
- 
+      // Music
       {
         name: 'Guitar',
         userId: 1,

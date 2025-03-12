@@ -3,7 +3,6 @@ const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
   class Language extends Model {
-
     static associate(models) {
       this.hasMany(models.Transaction, {
         foreignKey: 'languageId',
@@ -23,6 +22,6 @@ module.exports = (sequelize, DataTypes) => {
       modelName: 'Language',
     },
   );
-
-  return Language;
 };
+
+return Language;
