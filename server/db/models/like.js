@@ -1,26 +1,30 @@
 'use strict';
 const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Eventuser extends Model {
+  class Like extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate({ User, Event }) {
-      this.belongsTo(User, { foreignKey: 'userId' });
-      this.belongsTo(Event, { foreignKey: 'eventId' });
+    static associate({ User, Word }) {
+      this.belongsTo(User, {
+        foreignKey: 'userId',
+      });
+      this.belongsTo(Word, {
+        foreignKey: 'wordId',
+      });
     }
   }
-  Eventuser.init(
+  Like.init(
     {
+      wordId: DataTypes.INTEGER,
       userId: DataTypes.INTEGER,
-      eventId: DataTypes.INTEGER,
     },
     {
       sequelize,
-      modelName: 'Eventuser',
+      modelName: 'Like',
     },
   );
-  return Eventuser;
+  return Like;
 };

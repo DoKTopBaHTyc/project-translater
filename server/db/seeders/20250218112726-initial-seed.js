@@ -13,118 +13,217 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
         },
+      ],
+      {},
+    );
+
+    await queryInterface.bulkInsert('Categories', [
+      { name: 'en', createdAt: new Date(), updatedAt: new Date() },
+      { name: 'fr', createdAt: new Date(), updatedAt: new Date() },
+      { name: 'ja', createdAt: new Date(), updatedAt: new Date() },
+    ]);
+
+    await queryInterface.bulkInsert('Words', [
+      {
+        name: 'Cat',
+        userId: 1,
+        categoryId: 1,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        name: 'Computer',
+        userId: 1,
+        categoryId: 2,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        name: 'Pizza',
+        userId: 1,
+        categoryId: 3,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        name: 'Football',
+        userId: 1,
+        categoryId: 4,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        name: 'Tree',
+        userId: 1,
+        categoryId: 5,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        name: 'Guitar',
+        userId: 1,
+        categoryId: 6,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+    ]);
+    await queryInterface.bulkInsert('Likes', [
+      {
+        userId: 1,
+        wordId: 1,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        wordId: 2,
+        userId: 1,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        wordId: 3,
+        userId: 1,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        wordId: 4,
+        userId: 1,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        wordId: 5,
+        userId: 1,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        wordId: 6,
+        userId: 1,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+    ]);
+    await queryInterface.bulkInsert(
+      'Translations',
+      [
         {
-          name: 'Anna',
-          email: 'Anna@mail.com',
-          password: await bcrypt.hash('654321', 10),
+          wordId: 1,
+          languageId: 1,
+          translation: 'Cat',
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
-          name: 'Ivan',
-          email: 'Ivan@mail.com',
-          password: await bcrypt.hash('password', 10),
+          wordId: 1,
+          languageId: 2,
+          translation: 'Chat',
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
-          name: 'Maria',
-          email: 'Maria@mail.com',
-          password: await bcrypt.hash('qwerty', 10),
+          wordId: 1,
+          languageId: 3,
+          translation: 'ネコ',
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
-          name: 'Alexey',
-          email: 'Alexey@mail.com',
-          password: await bcrypt.hash('letmein', 10),
+          wordId: 1,
+          languageId: 4,
+          translation: 'Gato',
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          wordId: 1,
+          languageId: 5,
+          translation: 'Katze',
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+
+        {
+          wordId: 2,
+          languageId: 1,
+          translation: 'Computer',
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          wordId: 2,
+          languageId: 2,
+          translation: 'Ordinateur',
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          wordId: 2,
+          languageId: 3,
+          translation: 'コンピュータ',
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          wordId: 2,
+          languageId: 1,
+          translation: 'Computadora',
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          wordId: 2,
+          languageId: 2,
+          translation: 'Computer',
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+
+        {
+          wordId: 3,
+          languageId: 3,
+          translation: 'Pizza',
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          wordId: 3,
+          languageId: 1,
+          translation: 'Pizza',
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          wordId: 3,
+          languageId: 3,
+          translation: 'ピザ',
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          wordId: 3,
+          languageId: 2,
+          translation: 'Pizza',
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          wordId: 3,
+          languageId: 1,
+          translation: 'Pizza',
           createdAt: new Date(),
           updatedAt: new Date(),
         },
       ],
       {},
     );
-
-    await queryInterface.bulkInsert('Events', [
-      {
-        eventDate: new Date('2024-04-01 15:00:00'),
-        title: 'Мастер-класс по JavaScript',
-        text: 'Изучаем основы JavaScript и современные фреймворки',
-        address: 'ул. Программистов, 42',
-        maxParticipants: 20,
-        countParticipants: 0,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
-      {
-        eventDate: new Date('2024-04-05 18:00:00'),
-        title: 'React Bootcamp',
-        text: 'Интенсивный курс по React.js с практическими заданиями',
-        address: 'ул. Разработчиков, 10',
-        maxParticipants: 25,
-        countParticipants: 5,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
-      {
-        eventDate: new Date('2024-04-10 14:00:00'),
-        title: 'Введение в TypeScript',
-        text: 'Разбираем основы TypeScript и типизацию в JavaScript',
-        address: 'ул. Кодеров, 15',
-        maxParticipants: 30,
-        countParticipants: 12,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
-      {
-        eventDate: new Date('2024-04-15 16:30:00'),
-        title: 'Node.js для начинающих',
-        text: 'Изучаем основы работы с серверной частью на Node.js',
-        address: 'ул. Серверная, 8',
-        maxParticipants: 20,
-        countParticipants: 8,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
-      {
-        eventDate: new Date('2024-04-20 17:00:00'),
-        title: 'Vue.js: с нуля до профи',
-        text: 'Полный разбор Vue.js и его экосистемы',
-        address: 'ул. Фронтендеров, 23',
-        maxParticipants: 15,
-        countParticipants: 6,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
-      {
-        eventDate: new Date('2024-04-25 19:00:00'),
-        title: 'Алгоритмы и структуры данных',
-        text: 'Разбираем основные алгоритмы и их применение в коде',
-        address: 'ул. Хакеров, 5',
-        maxParticipants: 40,
-        countParticipants: 20,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
-    ]);
-
-    await queryInterface.bulkInsert('Eventusers', [
-      { userId: 1, eventId: 1, createdAt: new Date(), updatedAt: new Date() },
-      { userId: 2, eventId: 1, createdAt: new Date(), updatedAt: new Date() },
-      { userId: 3, eventId: 2, createdAt: new Date(), updatedAt: new Date() },
-      { userId: 4, eventId: 3, createdAt: new Date(), updatedAt: new Date() },
-      { userId: 5, eventId: 4, createdAt: new Date(), updatedAt: new Date() },
-      { userId: 1, eventId: 5, createdAt: new Date(), updatedAt: new Date() },
-      { userId: 2, eventId: 6, createdAt: new Date(), updatedAt: new Date() },
-      { userId: 3, eventId: 6, createdAt: new Date(), updatedAt: new Date() },
-      { userId: 4, eventId: 2, createdAt: new Date(), updatedAt: new Date() },
-      { userId: 5, eventId: 3, createdAt: new Date(), updatedAt: new Date() },
-    ]);
   },
 
   async down(queryInterface, Sequelize) {
     await queryInterface.bulkDelete('Users', null, {});
-    await queryInterface.bulkDelete('Events', null, {});
-    await queryInterface.bulkDelete('Eventusers', null, {});
+    await queryInterface.bulkDelete('Categories', null, {});
+    await queryInterface.bulkDelete('Words', null, {});
+    await queryInterface.bulkDelete('Likes', null, {});
   },
 };
