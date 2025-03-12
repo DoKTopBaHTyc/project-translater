@@ -2,6 +2,7 @@ const bcrypt = require('bcrypt');
 const { User } = require('../../db/models');
 const generateTokens = require('../utils/generateTokens');
 
+
 class AuthService {
   async signUp(email, name, password) {
     if (!email || !name || !password) {

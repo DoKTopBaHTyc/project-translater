@@ -5,7 +5,7 @@ export default function NavBar({ logoutHandler, user }) {
   return (
     <Navbar
       style={{
-        background: 'linear-gradient(to right, #2c3e50, #3498db)',
+        background: 'black',
         minHeight: '10vh',
         borderBottom: '1px solid rgba(255,255,255,0.1)',
         position: 'sticky',
@@ -24,10 +24,8 @@ export default function NavBar({ logoutHandler, user }) {
             padding: '5px 15px',
             borderRadius: '4px',
           }}
-        >
-          {user.status === 'logged'
-            ? `Приветствую, ${user?.data?.name}`
-            : 'Приветствую,  Гость'}
+        >ElbrusLingo 
+          {user.status === 'logged' && ` Привет, ${user?.data?.name}`}
         </Navbar.Brand>
 
         <Nav className="d-flex align-items-center gap-4">
@@ -38,21 +36,15 @@ export default function NavBar({ logoutHandler, user }) {
                 style={{
                   color: '#ecf0f1',
                   textDecoration: 'none',
-                  fontSize: '1.1rem',
-                  position: 'relative',
-                  padding: '5px 0',
-                  ':after': {
-                    content: '""',
-                    position: 'absolute',
-                    width: '0',
-                    height: '2px',
-                    bottom: '0',
-                    left: '0',
-                    background: '#e74c3c',
-                    transition: 'width 0.3s ease',
-                  },
-                  ':hover:after': {
-                    width: '100%',
+                  padding: '8px 20px',
+                  border: '2px solid #2ecc71',
+                  borderRadius: '25px',
+                  transition: 'all 0.3s ease',
+                  fontSize: '1rem',
+                  ':hover': {
+                    background: '#2ecc71',
+                    color: 'white',
+                    transform: 'scale(1.05)',
                   },
                 }}
               >
@@ -83,6 +75,25 @@ export default function NavBar({ logoutHandler, user }) {
           {user.status === 'guest' && (
             <div className="d-flex gap-4 align-items-center">
               <Link
+                to={'/'}
+                style={{
+                  color: '#ecf0f1',
+                  textDecoration: 'none',
+                  padding: '8px 20px',
+                  border: '2px solid #2ecc71',
+                  borderRadius: '25px',
+                  transition: 'all 0.3s ease',
+                  fontSize: '1rem',
+                  ':hover': {
+                    background: '#2ecc71',
+                    color: 'white',
+                    transform: 'scale(1.05)',
+                  },
+                }}
+              >
+                Главная
+              </Link>
+              <Link
                 to={'/signup'}
                 style={{
                   color: '#ecf0f1',
@@ -106,13 +117,14 @@ export default function NavBar({ logoutHandler, user }) {
                 style={{
                   color: '#ecf0f1',
                   textDecoration: 'none',
-                  padding: '8px 25px',
-                  background: '#e67e22',
+                  padding: '8px 20px',
+                  border: '2px solid #2ecc71',
                   borderRadius: '25px',
-                  fontSize: '1rem',
                   transition: 'all 0.3s ease',
+                  fontSize: '1rem',
                   ':hover': {
-                    background: '#d35400',
+                    background: '#2ecc71',
+                    color: 'white',
                     transform: 'scale(1.05)',
                   },
                 }}

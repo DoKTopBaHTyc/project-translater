@@ -12,6 +12,7 @@ import MainPage from './components/pages/MainPage';
 
 function App() {
   const [user, setUser] = useState({ status: 'logging' });
+  console.log("🚀 ~ App ~ user:", user)
 
   useEffect(() => {
     if (user.status === 'logging') {
@@ -70,9 +71,9 @@ function App() {
         <Route
           path="/"
           element={
-            <ProtectedRouter isAllowed={user.status === 'logged'}>
-              <MainPage user={user.data} />
-            </ProtectedRouter>
+           
+              <MainPage user={user} />
+         
           }
         />
         <Route
