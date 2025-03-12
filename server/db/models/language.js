@@ -2,33 +2,27 @@
 const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
-  class WordTranslation extends Model {
-    static associate({ Word, Language }) {
-      this.belongsTo(Word, { foreignKey: 'wordId' });
-      this.belongsTo(Language, { foreignKey: 'languageId' });
+  class Language extends Model {
+
+    static associate(models) {
+      this.hasMany(models.Transaction, {
+        foreignKey: 'languageId',
+      });
+      this.hasMany(models.Word, {
+        foreignKey: 'languageId',
+      });
     }
   }
 
-  WordTranslation.init(
+  Language.init(
     {
-      wordId: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-      },
-      languageId: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-      },
-      translation: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
+      name: DataTypes.STRING,
     },
     {
       sequelize,
-      modelName: 'WordTranslation',
+      modelName: 'Language',
     },
   );
 
-  return WordTranslation;
+  return Language;
 };

@@ -1,25 +1,34 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+const { Model, Transaction } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
-  class Translation extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
-    static associate(models) {
-      // define association here
+  class Transaction extends Model {
+    static associate({ Word, Language }) {
+      this.belongsTo(Word, { foreignKey: 'wordId' });
+      this.belongsTo(Language, { foreignKey: 'languageId' });
     }
   }
-  Translation.init({
-    wordId: DataTypes.INTEGER,
-    languageId: DataTypes.INTEGER,
-    translation: DataTypes.STRING
-  }, {
-    sequelize,
-    modelName: 'Translation',
-  });
-  return Translation;
+
+  Transaction.init(
+    {
+      wordId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      languageId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      translation: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+    },
+    {
+      sequelize,
+      modelName: 'Transaction',
+    },
+  );
+
+  return Transaction;
 };
