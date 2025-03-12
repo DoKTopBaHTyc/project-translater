@@ -1,16 +1,16 @@
 'use strict';
 
-const { Model, Transaction } = require('sequelize');
+const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
-  class Transaction extends Model {
+  class Translation extends Model {
     static associate({ Word, Language }) {
       this.belongsTo(Word, { foreignKey: 'wordId' });
       this.belongsTo(Language, { foreignKey: 'languageId' });
     }
   }
 
-  Transaction.init(
+  Translation.init(
     {
       wordId: {
         type: DataTypes.INTEGER,
@@ -27,9 +27,9 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: 'Transaction',
+      modelName: 'Translation',
     },
   );
 
-  return Transaction;
+  return Translation;
 };
