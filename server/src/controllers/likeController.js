@@ -1,9 +1,9 @@
-const { LikeService } = require('../services/like.service');
+const LikeService = require('../services/like.service');
 
 class LikeController {
-  static async WordStuded(req, res) {
+  static async wordStuded(req, res) {
     try {
-      const boolean = await LikeService.WordStuded();
+      const boolean = await LikeService.WordStuded(req.body);
       res.status(200).json({ message: boolean });
     } catch (error) {
       console.log(error);
