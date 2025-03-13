@@ -4,7 +4,8 @@ class TranslationController {
   static async getAllLangWord(req, res) {
     try {
       const languageId = +req.params.languageId
-      const words = await TranslateService.getAllLangWord(languageId);
+      const categoryId = +req.params.categoryId
+      const words = await TranslateService.getAllLangWord(categoryId,languageId);
       res.status(200).json(words);
     } catch (error) {
       console.log(error);

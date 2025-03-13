@@ -1,32 +1,25 @@
-// sk-or-v1-3c2c9ff0093f2623e83169d75ae6d1b57de17ffd503a7e0ab9eac420564cb,
-
 const axios = require('axios');
 
-async function translateText(text, targetLanguage) {
-  const apiKey = 'AQVN2sBsUfu6f0a_tUiNwhoe_MbU1JIZYN-wxY8k';
-  const url = 'https://translate.api.cloud.yandex.net/translate/v2/translate';
+const getTopicFromYandex = async (word) => {
+  const apiKey = 'AQVNxUW8m1WpSmFRpaPOKXTrZk4AlJSJopwGOLRd'; // Замени на свой API-ключ
+  const url = 'https://llm.api.cloud.yandex.net/foundationModels/v1/completion';
 
-  const response = await axios.post(
-    url,
-    {
-      folderId: 'b1gvrtc5c3p9ej8oeisv',
-      texts: [text],
-      targetLanguageCode: targetLanguage,
-    },
-    {
+  const data = {
+    text: word,
+  };
+
+  try {
+    const response = await axios.post(url, data, {
       headers: {
         Authorization: `Api-Key ${apiKey}`,
+        'Content-Type': 'application/json',
       },
-    },
-  );
+    });
 
-  return response.data.translations[0].text;
-}
+    console.log(response.data);
+  } catch (error) {
+    console.error('Ошибка:', error.response ? error.response.data : error.message);
+  }
+};
 
-// Пример использования
-translateText('Привет, как дела?', 'en')
-  .then((translation) => console.log('Перевод:', translation))
-  .catch((error) => console.error('Ошибка:', error));
-
-
-
+getTopicFromYandex('Программирование');

@@ -16,7 +16,7 @@ translitRouter.delete('/category/:id', CategoryController.deleteCategory);
 
 translitRouter.post('/category/like', LikeController.wordStuded);
 
-translitRouter.post('/lang/:languageId/category', TranslationController.getAllLangWord);
+translitRouter.post('/lang/:languageId/category/:categoryId', TranslationController.getAllLangWord);
 
 translitRouter.post('/translation/add', TranslationController.createTranslation);
 translitRouter.put('/translation/update', TranslationController.updateTranslation);
