@@ -1,23 +1,40 @@
 import { useEffect, useState } from "react"
+import axiosInstance from "../../API/axiosInstance"
+import { useParams } from "react-router"
 
 function WordsComponent({ languageId, card }) {
   const [isFlipped, setIsFlipped] = useState(false)
   const [isDisabled, setIsDisabled] = useState(false)
-
+  const {categoryId} = useParams();
   useEffect(() => {
-    const savedState = localStorage.getItem(`card_${card.name}_flipped`);
+    
+    const savedState = localStorage.getItem(`card_${card.id}_flipped`);
     if (savedState === 'true') {
       setIsFlipped(true);
       setIsDisabled(true);
     }
-  }, [card.name])
+  }, [card.id])
 
-  const handleClick = () => {
+  const handleClick = async () => {
     if(!isDisabled) {
       setIsFlipped(true)
       setIsDisabled(true)
+      localStorage.setItem(`card_${card.id}_flipped`, 'true');
+
+      try {
+        const response = await axiosInstance.post('/category/like/add', {
+          wordId: card.id,
+          categoryId: categoryId,
+        });
+        if (response.status === 200) {
+          console.log("Данные успешно отправлены:", response.data);
+        } else {
+          console.error("")
+        }
+      } catch (error) {
+        console.error('Ошибка при отправке данных:', error)
+      }
     }
-    localStorage.setItem(`card_${card.name}_flipped`, 'true');
   }
 
   const speakText = (text) => {
