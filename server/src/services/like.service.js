@@ -1,7 +1,7 @@
 const { Like } = require('../../db/models');
 
 class LikeService {
-  static async WordStuded(wordId) {
+  static async WordStuded({wordId}) {
     const word = await Like.findOne({
       where: { wordId },
     });

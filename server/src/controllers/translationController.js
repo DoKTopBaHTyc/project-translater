@@ -1,9 +1,10 @@
-const { TranslateService } = require('../services/translate.service');
+const TranslateService  = require('../services/translate.service');
 
 class TranslationController {
-  static async getAllLangEn(req, res) {
+  static async getAllLangWord(req, res) {
     try {
-      const words = await TranslateService.getAllLangEn(req.body);
+      const languageId = +req.params.languageId
+      const words = await TranslateService.getAllLangWord(languageId);
       res.status(200).json(words);
     } catch (error) {
       console.log(error);
@@ -11,29 +12,10 @@ class TranslationController {
     }
   }
 
-  static async getAllLangFr(req, res) {
-    try {
-      const words = await TranslateService.getAllLangFr(req.body);
-      res.status(200).json(words);
-    } catch (error) {
-      console.log(error);
-      res.sendStatus(500);
-    }
-  }
-
-  static async getAllLangJa(req, res) {
-    try {
-      const words = await TranslateService.getAllLangJa(req.body);
-      res.status(200).json(words);
-    } catch (error) {
-      console.log(error);
-      res.sendStatus(500);
-    }
-  }
-
+  
   static async createTranslation(req, res) {
     try {
-      const word = await TranslateService.createCategory(req.body);
+      const word = await TranslateService.createTranslation(req.body);
       res.status(200).json(word);
     } catch (error) {
       console.log(error);
@@ -43,7 +25,7 @@ class TranslationController {
 
   static async updateTranslation(req, res) {
     try {
-      const word = await TranslateService.updateCategory(req.body);
+      const word = await TranslateService.updateTranslation(req.body);
       res.status(200).json(word);
     } catch (error) {
       console.log(error);
@@ -53,7 +35,7 @@ class TranslationController {
 
   static async deleateTranslation(req, res) {
     try {
-      const word = await TranslateService.deleateCategory(req.body);
+      const word = await TranslateService.deleateTranslation(req.body);
       res.status(200).json(word);
     } catch (error) {
       console.log(error);

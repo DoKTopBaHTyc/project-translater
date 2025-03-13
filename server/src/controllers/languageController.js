@@ -1,4 +1,4 @@
-const { LanguageService } = require('../services/language.service');
+const  LanguageService  = require('../services/language.service');
 
 class LanguageController {
   static async getAllLanguage(req, res) {
