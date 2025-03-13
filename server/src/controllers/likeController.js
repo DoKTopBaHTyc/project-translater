@@ -15,7 +15,7 @@ class LikeController {
     try {
       const studedword = await LikeService.createStudedWord({
         ...req.body,
-        userId: req.locals.user.id,
+        userId: res.locals.user.id,
       });
       res.status(200).json(studedword);
     } catch (error) {
