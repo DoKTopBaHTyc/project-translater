@@ -1,7 +1,7 @@
 const { Language } = require('../../db/models');
 
 class LanguageService {
-  static async getAllCategory() {
+  static async getAllLanguage() {
     const langs = await Language.findAll();
     return langs;
   }

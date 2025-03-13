@@ -1,48 +1,23 @@
-const { Word, Translation } = require('../../db/models');
+const { Word } = require('../../db/models');
 
-const translate = require('@vitalets/google-translate-api');
-
-class WordandTranslateService {
-  static async getAllLangEn({ languageId }) {
-    const words = await Translation.findAll({
-      where: { languageId },
-      attributes: ['name', 'en'],
-    });
-    return words;
+class WordService {
+  static async createWord({ name, userId, categoryId }) {
+    const word = await Word.create({ name, userId, categoryId });
+    return word;
   }
 
-  static async getAllLangFr({ languageId }) {
-    const words = await Translation.findAll({
-      where: { languageId },
-    });
-    return words;
-  }
-
-  static async getAllLangJa({ languageId }) {
-    const words = await Translation.findAll({
-      where: { languageId },
-    });
-    return words;
-  }
-
-  static async createWord() {
-    translate('привет', { from: 'ru', to: 'en' })
-      .then((res) => {
-        console.log(res.text); // Вывод: "hello"
-      })
-      .catch((err) => {
-        console.error('Ошибка перевода:', err);
-      });
-  }
-
-  static async checkTranslit({ name, id }) {
+  static async updateWord({ name, id }) {
     const word = await Word.findByPk(id);
-    if (word.name.trim().toLowerCase() !== name.trim().toLowerCase()) {
-      return false;
-    }
-    return true;
+    const updateword = await word.update({ name });
+    return updateword;
   }
+
+  static async deleateWord({ id }) {
+    const deletedRows = await Word.destroy({ where: { id } });
+    return deletedRows;
+  }
+
+
 }
 
-
-module.exports = WordandTranslateService;
+module.exports = WordService;
