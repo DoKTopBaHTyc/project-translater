@@ -25,7 +25,6 @@ module.exports = {
           model: 'Languages',
           key: 'id',
         },
-        onDelete: 'CASCADE',
       },
       translation: {
         type: Sequelize.STRING,
