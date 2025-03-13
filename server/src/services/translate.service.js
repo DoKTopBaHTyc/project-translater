@@ -1,9 +1,10 @@
 const { Translation, Word } = require('../../db/models');
 
 class TranslateService {
-  static async getAllLangWord(languageId) {
+  static async getAllLangWord(categoryId,languageId) {
     const words = await Word.findAll({
       attributes: ['name'],
+      where: { categoryId },
       include: [
         {
           model: Translation,
