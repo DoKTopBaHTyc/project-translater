@@ -22,7 +22,20 @@ class CategoryService {
     return deletedRows;
   }
 
-
+  static async getCategoryByName(name) {
+    const category = await Category.findOne({
+      where: {
+        name: {
+          [Op.like]: `%${name}%`,
+        },
+      },
+    });
+    if (category === undefined) {
+      const newCategory = await Category.create({ name });
+      return newCategory;
+    }
+    return category;
+  }
 }
 
 module.exports = CategoryService;
