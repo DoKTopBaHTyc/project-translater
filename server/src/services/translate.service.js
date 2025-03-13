@@ -1,26 +1,23 @@
-const { Translation } = require('../../db/models');
+const { Translation, Word } = require('../../db/models');
 
 class TranslateService {
-  static async getAllLangEn({ languageId }) {
-    const words = await Translation.findAll({
-      where: { languageId },
-      attributes: ['name', 'en'],
+  static async getAllLangWord(languageId) {
+    const words = await Word.findAll({
+      attributes: ['name'],
+      include: [
+        {
+          model: Translation,
+          attributes: ['translation'],
+          where: { languageId },
+        },
+      ],
     });
-    return words;
-  }
 
-  static async getAllLangFr({ languageId }) {
-    const words = await Translation.findAll({
-      where: { languageId },
-    });
-    return words;
-  }
-
-  static async getAllLangJa({ languageId }) {
-    const words = await Translation.findAll({
-      where: { languageId },
-    });
-    return words;
+    const result = words.map((word,index) => ({
+      name: word.name,
+      translation: word.Translations[index].translation,
+    }));
+    return result;
   }
 
   static async createTranslation({ wordId, languageId, translation }) {
