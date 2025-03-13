@@ -5,7 +5,7 @@ class WordService {
   static async createWord({ name, userId, categoryId, languageId }) {
     const prevword = await Word.findOne({ where: { name } }
     );
-    if (prevword !== undefined) {
+    if (prevword) {
       throw new Error(`Данное слово уже существует`);
     }
     const word = await Word.create({ name, userId, categoryId });
