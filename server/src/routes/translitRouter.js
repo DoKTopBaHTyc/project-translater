@@ -16,14 +16,16 @@ translitRouter.delete('/category/:id', CategoryController.deleteCategory);
 
 translitRouter.post('/category/like', LikeController.wordStuded);
 
-translitRouter.post('/lang/:languageId/category/:categoryId', TranslationController.getAllLangWord);
+translitRouter.get(
+  '/lang/:languageId/category/:categoryId',
+  TranslationController.getAllLangWord,
+);
 
-translitRouter.post('/translation/add', TranslationController.createTranslation);
 translitRouter.put('/translation/update', TranslationController.updateTranslation);
 translitRouter.delete('/translation/deleate', TranslationController.deleateTranslation);
 
-translitRouter.post('/translation/add', WordController.createWord);
-translitRouter.put('/translation/update', WordController.updateWord);
-translitRouter.delete('/translation/deleate', WordController.deleateWord);
+translitRouter.post('/word/add', WordController.createWord);
+translitRouter.put('/word/update', WordController.updateWord);
+translitRouter.delete('/word/deleate', WordController.deleateWord);
 
 module.exports = translitRouter;

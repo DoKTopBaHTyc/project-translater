@@ -7,9 +7,6 @@ module.exports = (sequelize, DataTypes) => {
       this.hasMany(models.Translation, {
         foreignKey: 'languageId',
       });
-      this.hasMany(models.Word, {
-        foreignKey: 'languageId',
-      });
     }
   }
 

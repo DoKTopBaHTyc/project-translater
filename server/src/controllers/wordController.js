@@ -1,4 +1,4 @@
-const WordService  = require('../services/word.service');
+const WordService = require('../services/word.service');
 
 class WordController {
   static async createWord(req, res) {
@@ -7,7 +7,7 @@ class WordController {
       res.status(200).json(word);
     } catch (error) {
       console.log(error);
-      res.sendStatus(500);
+      res.status(error.message.includes('внесено') ? 400 : 500).send(error.message);
     }
   }
 
