@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import axiosInstance from "../../API/axiosInstance"
 import { useParams } from "react-router"
 
-function WordsComponent({ languageId, card }) {
+function WordsComponent({ card }) {
   const [isFlipped, setIsFlipped] = useState(false)
   const [isDisabled, setIsDisabled] = useState(false)
   const {categoryId} = useParams();
@@ -14,7 +14,8 @@ function WordsComponent({ languageId, card }) {
       setIsDisabled(true);
     }
   }, [card.id])
-
+console.log("cardId",card.id)
+console.log("categoryId",categoryId)
   const handleClick = async () => {
     if(!isDisabled) {
       setIsFlipped(true)
@@ -24,12 +25,10 @@ function WordsComponent({ languageId, card }) {
       try {
         const response = await axiosInstance.post('/category/like/add', {
           wordId: card.id,
-          categoryId: categoryId,
+          categoryId,
         });
         if (response.status === 200) {
           console.log("Данные успешно отправлены:", response.data);
-        } else {
-          console.error("")
         }
       } catch (error) {
         console.error('Ошибка при отправке данных:', error)
@@ -47,7 +46,7 @@ function WordsComponent({ languageId, card }) {
 
   return (
     <div
-      onClick={handleClick}
+      onClick={() => handleClick()}
       style={{
         width: "150px",
         height: "100px",
