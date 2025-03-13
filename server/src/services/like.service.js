@@ -17,14 +17,14 @@ class LikeService {
   }
 
   static async allStudedWordByCategory({ userId, categoryId }) {
-    const studeвCount = await Like.count({
+    const studedCount = await Like.count({
       where: {
         userId,
         categoryId,
       },
     });
 
-    return studeвCount;
+    return studedCount;
   }
 }
 
