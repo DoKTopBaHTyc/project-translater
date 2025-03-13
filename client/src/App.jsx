@@ -7,9 +7,10 @@ import Layout from './HOCs/Layout';
 import ProtectedRouter from './HOCs/ProtectedRouter';
 import SignUpPage from './components/pages/SignUpPage';
 import LoginPage from './components/pages/LoginPage';
-
 import MainPage from './components/pages/MainPage';
 import CategoryPage from './components/pages/CategoryPage';
+
+import LkPage from './components/pages/LkPage';
 import WordsPage from './components/pages/WordsPage';
 
 function App() {
@@ -28,7 +29,6 @@ function App() {
           setAccessToken('');
         });
     }
-    
   }, [user.status]);
 
   const logoutHandler = () => {
@@ -70,25 +70,11 @@ function App() {
   return (
     <Routes>
       <Route element={<Layout user={user} logoutHandler={logoutHandler} />}>
+        <Route path="/" element={<MainPage user={user} />} />
+        <Route path="/language/:id/categories" element={<CategoryPage />} />
         <Route
-          path="/"
-          element={
-            <ProtectedRouter isAllowed={user.status === 'logged'}>
-              <MainPage user={user.data} />
-            </ProtectedRouter>
-          }
-        />
-        <Route
-          path="/categories"
-          element={
-              <CategoryPage/>
-          }
-        />
-        <Route
-          path="/words"
-          element={
-              <WordsPage></WordsPage>
-          }
+          path="/language/:languageId/categories/:categoryId/words"
+          element={<WordsPage/>}
         />
         <Route
           path="/signup"
@@ -106,6 +92,8 @@ function App() {
             </ProtectedRouter>
           }
         />
+        <Route path="/language/:id" element={<CategoryPage />} />
+        <Route path="/lkpage" element={<LkPage user={user} />} />
       </Route>
     </Routes>
   );
