@@ -25,7 +25,7 @@ export default function LoginPage({ loginHandler }) {
       style={{
         minHeight: '100vh',
         minWidth: '100%',
-        background: 'linear-gradient(135deg, #2ecc71 0%, #27ae60 50%, #1abc9c 100%)',
+        background: 'linear-gradient(135deg, #2ecc71 0%, #27ae60 10%, #1abc9c 100%)',
         padding: '20px',
       }}
     >

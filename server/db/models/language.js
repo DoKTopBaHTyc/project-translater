@@ -7,7 +7,6 @@ module.exports = (sequelize, DataTypes) => {
       this.hasMany(models.Translation, {
         foreignKey: 'languageId',
       });
-     
     }
   }
 
