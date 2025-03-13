@@ -1,18 +1,27 @@
-import { Container, Card, CardContent, LinearProgress, Box } from '@mui/material';
-import { List, ListItem } from '@mui/material';
+import {
+  Container,
+  Card,
+  CardContent,
+  LinearProgress,
+  Box,
+  TextField,
+} from '@mui/material';
+import { List, ListItem, Button, Modal } from '@mui/material';
 import { useEffect, useState } from 'react';
 import axiosInstance from '../../API/axiosInstance';
 
 export default function LkPage({ user }) {
   const progress = user.data.progress || 40;
-  const [cards, setCards] = useState([]);
+  const [lang, setLangs] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [open, setOpen] = useState(false);
+  const [add, setAdd] = useState('');
 
   useEffect(() => {
     axiosInstance
       .get('/lang')
       .then((response) => {
-        setCards(response.data);
+        setLangs(response.data);
       })
       .catch((error) => {
         console.error('Ошибка при загрузке данных:', error);
@@ -32,6 +41,27 @@ export default function LkPage({ user }) {
 
   const categoryMap = categories.map((el) => el);
 
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  const addHandler = (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    const data = Object.fromEntries(formData);
+    axiosInstance
+      .post('/word/add', {
+        name: data.word,
+        userId: user.id,
+        categoryId: categories.id,
+      })
+      .then(({ data }) => {
+        setAdd(data.message || 'Успешно добавлено!');
+      })
+      .catch((error) => {
+        console.error('Ошибка при добавлении:', error);
+      });
+  };
+
   return (
     <Container
       maxWidth="sm"
@@ -44,6 +74,63 @@ export default function LkPage({ user }) {
       }}
     >
       <Card sx={{ width: '100%', textAlign: 'center', p: 3, boxShadow: 6 }}>
+        <Button
+          onClick={handleOpen}
+          style={{ backgroundColor: 'black', border: 'none', color: 'white' }}
+        >
+          Добавить новую карточку
+        </Button>
+
+        <Modal open={open} onClose={handleClose}>
+          <Box
+            sx={{
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              width: 400,
+              bgcolor: 'white',
+              boxShadow: 24,
+              p: 4,
+              borderRadius: 2,
+            }}
+          >
+            <form onSubmit={addHandler}>
+              <TextField
+                fullWidth
+                label="Язык"
+                variant="outlined"
+                name="lang"
+                sx={{ mb: 2 }}
+              />
+              <TextField
+                fullWidth
+                label="Категория"
+                variant="outlined"
+                name="category"
+                sx={{ mb: 2 }}
+              />
+              <TextField
+                fullWidth
+                label="Слово"
+                variant="outlined"
+                name="word"
+                sx={{ mb: 2 }}
+              />
+
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
+                <Button variant="contained" color="primary" type="submit">
+                  Добавить
+                </Button>
+
+                <Button variant="contained" color="primary" onClick={handleClose}>
+                  Отмена
+                </Button>
+              </Box>
+            </form>
+          </Box>
+        </Modal>
+
         <CardContent>
           <h2
             variant="h5"
@@ -54,7 +141,7 @@ export default function LkPage({ user }) {
           </h2>
 
           <List sx={{ mt: 2 }}>
-            {cards.map((el) => (
+            {lang.map((el) => (
               <ListItem
                 key={el.id}
                 sx={{
