@@ -2,14 +2,13 @@ import { useEffect, useState } from 'react';
 import axiosInstance from '../../API/axiosInstance';
 import style from './MainPage.module.css';
 import Category from '../ui/CategoryMainPage';
-import LkPage from './LkPage';
 
 export default function MainPage({ user }) {
   const [cards, setCards] = useState([]);
 
   useEffect(() => {
     axiosInstance
-      .get('/')
+      .get('/lang')
       .then((response) => {
         setCards(response.data);
       })

@@ -85,7 +85,7 @@ function App() {
             </ProtectedRouter>
           }
         />
-        <Route path="/category/:id" element={<CategoryPage />} />
+        <Route path="/language/:id" element={<CategoryPage />} />
         <Route path="/lkpage" element={<LkPage user={user} />} />
       </Route>
     </Routes>
