@@ -23,14 +23,14 @@ class TranslateService {
     return words;
   }
 
-  static async createTranslation({ userId, languageIdId, translation }) {
-    const word = await Translation.create({ userId, languageIdId, translation });
+  static async createTranslation({ wordId, languageId, translation }) {
+    const word = await Translation.create({ wordId, languageId, translation });
     return word;
   }
 
   static async updateTranslation({ translation, id }) {
     const word = await Translation.findByPk(id);
-    const updateword = await word.update({translation});
+    const updateword = await word.update({ translation });
     return updateword;
   }
 
@@ -38,7 +38,6 @@ class TranslateService {
     const deletedRows = await Translation.destroy({ where: { id } });
     return deletedRows;
   }
-
 
   static async checkTranslit({ translation, id }) {
     const word = await Translation.findByPk(id);

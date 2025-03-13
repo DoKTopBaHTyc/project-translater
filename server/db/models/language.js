@@ -4,7 +4,7 @@ const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Language extends Model {
     static associate(models) {
-      this.hasMany(models.Transaction, {
+      this.hasMany(models.Translation, {
         foreignKey: 'languageId',
       });
       this.hasMany(models.Word, {
@@ -22,6 +22,5 @@ module.exports = (sequelize, DataTypes) => {
       modelName: 'Language',
     },
   );
+  return Language;
 };
-
-return Language;
