@@ -13,6 +13,7 @@ translitRouter.get('/category', CategoryController.getAllCategory);
 translitRouter.post('/category', CategoryController.createCategory);
 translitRouter.put('/category/:id', CategoryController.updateCategory);
 translitRouter.delete('/category/:id', CategoryController.deleteCategory);
+translitRouter.post('/category/name', CategoryController.getCategoryName);
 
 translitRouter.post('/category/like', LikeController.wordStuded);
 translitRouter.post('/category/like/add', LikeController.createStudedWord);

@@ -21,12 +21,12 @@ module.exports = {
     ]);
 
     await queryInterface.bulkInsert('Categories', [
-      { name: 'Animals', createdAt: new Date(), updatedAt: new Date() },
-      { name: 'Technology', createdAt: new Date(), updatedAt: new Date() },
-      { name: 'Food', createdAt: new Date(), updatedAt: new Date() },
-      { name: 'Sports', createdAt: new Date(), updatedAt: new Date() },
-      { name: 'Music', createdAt: new Date(), updatedAt: new Date() },
-      { name: 'Movies', createdAt: new Date(), updatedAt: new Date() },
+      { name: 'Животные', createdAt: new Date(), updatedAt: new Date() },
+      { name: 'Технологии', createdAt: new Date(), updatedAt: new Date() },
+      { name: 'Еда', createdAt: new Date(), updatedAt: new Date() },
+      { name: 'Спорт', createdAt: new Date(), updatedAt: new Date() },
+      { name: 'Музыка', createdAt: new Date(), updatedAt: new Date() },
+      { name: 'Кино', createdAt: new Date(), updatedAt: new Date() },
     ]);
 
     await queryInterface.bulkInsert('Words', [
