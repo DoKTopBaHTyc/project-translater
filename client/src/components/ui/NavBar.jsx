@@ -24,8 +24,8 @@ export default function NavBar({ logoutHandler, user }) {
             padding: '5px 15px',
             borderRadius: '4px',
           }}
-        >ElbrusLingo 
-          {user.status === 'logged' && ` Привет, ${user?.data?.name}`}
+        >
+          ElbrusLingo
         </Navbar.Brand>
 
         <Nav className="d-flex align-items-center gap-4">
@@ -70,6 +70,21 @@ export default function NavBar({ logoutHandler, user }) {
               >
                 Выход
               </Button>
+              <Link to={'/lkpage'}>
+                <Button
+                  style={{
+                    background: 'transparent',
+                    border: '2px solid #2ecc71',
+                    color: 'white',
+                    padding: '8px 25px',
+                    borderRadius: '25px',
+                    fontSize: '1rem',
+                    transition: 'all 0.3s ease',
+                  }}
+                >
+                  {user.status === 'logged' && ` Привет, ${user?.data?.name}`}
+                </Button>
+              </Link>
             </>
           )}
           {user.status === 'guest' && (

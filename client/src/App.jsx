@@ -7,12 +7,12 @@ import Layout from './HOCs/Layout';
 import ProtectedRouter from './HOCs/ProtectedRouter';
 import SignUpPage from './components/pages/SignUpPage';
 import LoginPage from './components/pages/LoginPage';
-
 import MainPage from './components/pages/MainPage';
+import CategoryPage from './components/pages/CategoryPage';
+import LkPage from './components/pages/LkPage';
 
 function App() {
   const [user, setUser] = useState({ status: 'logging' });
-  console.log("🚀 ~ App ~ user:", user)
 
   useEffect(() => {
     if (user.status === 'logging') {
@@ -68,14 +68,7 @@ function App() {
   return (
     <Routes>
       <Route element={<Layout user={user} logoutHandler={logoutHandler} />}>
-        <Route
-          path="/"
-          element={
-           
-              <MainPage user={user} />
-         
-          }
-        />
+        <Route path="/" element={<MainPage user={user} />} />
         <Route
           path="/signup"
           element={
@@ -92,6 +85,8 @@ function App() {
             </ProtectedRouter>
           }
         />
+        <Route path="/category/:id" element={<CategoryPage />} />
+        <Route path="/lkpage" element={<LkPage user={user} />} />
       </Route>
     </Routes>
   );

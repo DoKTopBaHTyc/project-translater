@@ -1,8 +1,37 @@
+import { useEffect, useState } from 'react';
+import axiosInstance from '../../API/axiosInstance';
+import style from './MainPage.module.css';
+import Category from '../ui/CategoryMainPage';
+import LkPage from './LkPage';
+
 export default function MainPage({ user }) {
-  console.log('🚀 ~ MainPage ~ user:', user);
+  const [cards, setCards] = useState([]);
+
+  useEffect(() => {
+    axiosInstance
+      .get('/')
+      .then((response) => {
+        setCards(response.data);
+      })
+      .catch((error) => {
+        console.error('Ошибка при загрузке данных:', error);
+      });
+  }, []);
 
   if (user.status === 'logged') {
-    return <div>Тут размап выбора языков </div>;
+    return (
+      <div className={style.header}>
+        <h3>Выбор языка</h3>
+        <div className={style.category}>
+          {cards.map((card) => (
+            <div key={card.id}>
+              {' '}
+              <Category card={card} />
+            </div>
+          ))}
+        </div>
+      </div>
+    );
   } else {
     return (
       <div
