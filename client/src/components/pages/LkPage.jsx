@@ -16,6 +16,8 @@ export default function LkPage({ user }) {
   const [categories, setCategories] = useState([]);
   const [open, setOpen] = useState(false);
   const [add, setAdd] = useState('');
+  const [categ, setCateg] = useState('');
+  console.log('🚀 ~ LkPage ~ categ:', categ);
 
   useEffect(() => {
     axiosInstance
@@ -39,6 +41,17 @@ export default function LkPage({ user }) {
       });
   }, []);
 
+  // useEffect(() => {
+  //   axiosInstance
+  //     .post('/category/name')
+  //     .then((response) => {
+  //       setCateg(response.data);
+  //     })
+  //     .catch((error) => {
+  //       console.error('Ошибка при загрузке данных:', error);
+  //     });
+  // }, []);
+
   const categoryMap = categories.map((el) => el);
 
   const handleOpen = () => setOpen(true);
@@ -48,11 +61,12 @@ export default function LkPage({ user }) {
     event.preventDefault();
     const formData = new FormData(event.target);
     const data = Object.fromEntries(formData);
+    const selectedCategory = categories.find((cat) => cat.name === data.category);
     axiosInstance
       .post('/word/add', {
         name: data.word,
-        userId: user.id,
-        categoryId: categories.id,
+        userId: user.data.id,
+        categoryId: selectedCategory.id,
       })
       .then(({ data }) => {
         setAdd(data.message || 'Успешно добавлено!');

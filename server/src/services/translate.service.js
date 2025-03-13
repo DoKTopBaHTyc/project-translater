@@ -3,7 +3,7 @@ const { Translation, Word } = require('../../db/models');
 class TranslateService {
   static async getAllLangWord(categoryId, languageId) {
     const words = await Word.findAll({
-      attributes: ['name'],
+      attributes: ['name', 'id'],
       where: { categoryId },
       include: [
         {
@@ -14,8 +14,9 @@ class TranslateService {
       ],
     });
 
-    const result = words.map((word) => ({
-      name: word.name,
+    const result = words.map((word,index) => ({
+      name: words[index].name, 
+      id: words[index].id,
       translation: word.Translations[0].translation,
     }));
     return result;
