@@ -1,13 +1,11 @@
 'use strict';
+
 const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
   class Language extends Model {
     static associate(models) {
       this.hasMany(models.Translation, {
-        foreignKey: 'languageId',
-      });
-      this.hasMany(models.Word, {
         foreignKey: 'languageId',
       });
     }
@@ -24,4 +22,3 @@ module.exports = (sequelize, DataTypes) => {
   );
   return Language;
 };
-
