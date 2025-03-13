@@ -12,9 +12,7 @@ import CategoryPage from './components/pages/CategoryPage';
 
 import LkPage from './components/pages/LkPage';
 
-import LkPage from './components/pages/LkPage';
 import WordsPage from './components/pages/WordsPage';
-
 
 function App() {
   const [user, setUser] = useState({ status: 'logging' });
@@ -77,7 +75,7 @@ function App() {
         <Route path="/language/:id/categories" element={<CategoryPage />} />
         <Route
           path="/language/:languageId/categories/:categoryId/words"
-          element={<WordsPage/>}
+          element={<WordsPage />}
         />
         <Route
           path="/signup"
@@ -95,8 +93,6 @@ function App() {
             </ProtectedRouter>
           }
         />
-        <Route path="/language/:id" element={<CategoryPage />} />
-        <Route path="/lkpage" element={<LkPage user={user} />} />
         <Route path="/language/:id" element={<CategoryPage />} />
         <Route path="/lkpage" element={<LkPage user={user} />} />
       </Route>
