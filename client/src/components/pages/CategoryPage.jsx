@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import CategoryComponent from "../ui/CategoryComponent";
 
@@ -33,3 +34,4 @@ function CategoryPage() {
 }
 
 export default CategoryPage;
+
