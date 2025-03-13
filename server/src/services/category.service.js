@@ -1,3 +1,4 @@
+const { Op } = require('sequelize');
 const { Category } = require('../../db/models');
 
 class CategoryService {
@@ -25,12 +26,11 @@ class CategoryService {
   static async getCategoryByName(name) {
     const category = await Category.findOne({
       where: {
-        name: {
-          [Op.like]: `%${name}%`,
-        },
+        name: { [Op.iLike]: `${name}` },
       },
     });
-    if (category === undefined) {
+
+    if (!category) {
       const newCategory = await Category.create({ name });
       return newCategory;
     }
