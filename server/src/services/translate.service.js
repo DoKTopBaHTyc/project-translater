@@ -21,11 +21,6 @@ class TranslateService {
     return result;
   }
 
-  static async createTranslation({ wordId, languageId, translation }) {
-    const word = await Translation.create({ wordId, languageId, translation });
-    return word;
-  }
-
   static async updateTranslation({ translation, id }) {
     const word = await Translation.findByPk(id);
     const updateword = await word.update({ translation });

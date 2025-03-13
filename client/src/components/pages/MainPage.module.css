@@ -1,0 +1,33 @@
+.category{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+.header h3{
+    display: flex;
+    justify-content: center;
+}
+
+.cardComponent {
+    width: 200px;
+    height: 100px;
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    color: white;
+    font-size: 16px;
+    border-radius: 10px;
+    border: '2px solid #2ecc71';
+    margin: 10px;
+  }
+
+
+  /* .cardComponent{
+    color: '#ecf0f1';
+    text-decoration: 'none';
+    padding: '8px 20px';
+    border: '2px solid #2ecc71';
+} */

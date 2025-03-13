@@ -1,4 +1,5 @@
 'use strict';
+
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
@@ -25,7 +26,6 @@ module.exports = {
           model: 'Languages',
           key: 'id',
         },
-        onDelete: 'CASCADE',
       },
       translation: {
         type: Sequelize.STRING,
