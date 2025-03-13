@@ -13,16 +13,7 @@ class TranslationController {
     }
   }
 
-  
-  static async createTranslation(req, res) {
-    try {
-      const word = await TranslateService.createTranslation(req.body);
-      res.status(200).json(word);
-    } catch (error) {
-      console.log(error);
-      res.sendStatus(500);
-    }
-  }
+
 
   static async updateTranslation(req, res) {
     try {
