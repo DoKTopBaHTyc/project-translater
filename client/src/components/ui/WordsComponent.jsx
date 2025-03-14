@@ -15,8 +15,12 @@ function WordsComponent({ deleteHandler, card }) {
   }, [card.id]);
 
   const handleDelete = async () => {
-    await axiosInstance.delete('/word/deleate/${}');
-    deleteHandler(card.id);
+    try {
+      await axiosInstance.delete(`/word/deleate/${card.id}`);
+      deleteHandler(card.id);
+    } catch (error) {
+      console.log(error)
+    }
   };
 
   const handleClick = async () => {
@@ -119,7 +123,7 @@ function WordsComponent({ deleteHandler, card }) {
             </button>
           </div>
           <div style={{ display: 'flex', gap: '10px', width: '100%', justifyContent: 'center' }}>
-          <button
+          <button onClick={handleDelete}
             style={{
               background: '#ff4d4d',
               border: 'none',
