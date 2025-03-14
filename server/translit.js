@@ -1,10 +1,5 @@
-
-
-// const API_URL = 'https://llm.api.cloud.yandex.net/foundationModels/v1/completion';
 const IAM_TOKEN =
-  't1.9euelZqWnJfHl4yUyYybis2Rmc2Nyu3rnpWanc-ZzsaNlJTImpONnpSKjI_l9Pd9SDRB-e94BEq-3fT3PXcxQfnveARKvs3n9euelZqPnpWejZrNlc3Gmoyem42cie_8xeuelZqPnpWejZrNlc3Gmoyem42ciQ.9I4wnIHTKHTBP6nCIJkeiwwX5xeR9Y0P9b02AJjrHBbXfxmermXiQ9mNwTR3hsnGQa4m-C38oneSbB5uuJ4tBw';
-// const FOLDER_ID = 'b1ggra6on9uq4vsogm10';
-
+  't1.9euelZqZycnIi5CczZrNnMrGjI2ZyO3rnpWanc-ZzsaNlJTImpONnpSKjI_l8_dSVzBB-e9-JzFU_t3z9xIGLkH5734nMVT-zef1656VmpHOmZubmprKz5zLkZOeksjP7_zF656VmpHOmZubmprKz5zLkZOeksjP.h1HYkC3ItleSDxDBfJfa93zBSSBE1M3cSOZqZfbOqHvjJzmNO4e2Ia4bL7TL17MkWeAzxoqK6YBSPBFe7xM0AA';
 const API_URL = 'https://llm.api.cloud.yandex.net/foundationModels/v1/completion';
 const FOLDER_ID = 'b1ggra6on9uq4vsogm10';
 
@@ -25,21 +20,13 @@ async function generateSentence(word) {
       messages: [
         {
           role: 'user',
-          text: `Составь осмысленное предложение с использованием слова "${word}":`,
+          text: `Составь осмысленное предложение с использованием слова "${word}" и перевод предложения. Результат пришли в виде массива из двух элементов, предложения с большой буквы:`,
         },
       ],
     }),
   });
-
   const data = await response.json();
-  if (data.result && data.result.alternatives && data.result.alternatives[0]) {
-    return data.result.alternatives[0].message.text;
-  } else {
-    console.error('Ответ не содержит "alternatives"', data);
-    return 'Ошибка в ответе от API';
-  }
+  return data.result.alternatives[0].message.text;
 }
 
-generateSentence('pomme').then((data) => console.log(data));
-
-
+generateSentence('Слон').then((data) => console.log(data));
