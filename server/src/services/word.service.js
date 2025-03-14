@@ -32,7 +32,7 @@ class WordService {
     return updateword;
   }
 
-  static async deleateWord({ id }) {
+  static async deleateWord( id ) {
     const deletedRows = await Word.destroy({ where: { id } });
     return deletedRows;
   }
