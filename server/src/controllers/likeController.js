@@ -14,10 +14,7 @@ class LikeController {
   static async createStudedWord(req, res) {
     try {
 
-      const studedword = await LikeService.createStudedWord({
-        ...req.body,
-        userId: res.locals.user.id,
-      });
+      const studedword = await LikeService.createStudedWord(req.body);
       res.status(200).json(studedword);
     } catch (error) {
       console.log(error);

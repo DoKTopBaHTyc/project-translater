@@ -17,6 +17,7 @@ module.exports = {
           model: 'Words',
           key: 'id',
         },
+        onDelete: 'CASCADE',
       },
       userId: {
         type: Sequelize.INTEGER,
