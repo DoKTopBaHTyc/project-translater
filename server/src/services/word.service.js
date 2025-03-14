@@ -3,11 +3,9 @@ const ApiTranslate = require('../services/APItranslate');
 
 class WordService {
   static async createWord({ name, userId, categoryId, languageId }) {
-    const prevword = await Word.findOne({ where: { name } }
-    );
+    const prevword = await Word.findOne({ where: { name } });
     if (prevword) {
       throw new Error(`Данное слово уже существует`);
-      
     }
     const word = await Word.create({ name, userId, categoryId });
 
@@ -16,8 +14,7 @@ class WordService {
       where: { id: languageId },
     });
 
-    // const translationword = await ApiTranslate.translateText(word.name, language.name); !!!!!!!
-    const translationword = 'ghjhjfhjfh'
+    const translationword = await ApiTranslate.translateText(word.name, language.name);
 
     const translate = await Translation.create({
       translation: translationword,

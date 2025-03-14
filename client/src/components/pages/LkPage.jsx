@@ -11,7 +11,7 @@ import { useEffect, useState } from 'react';
 import axiosInstance from '../../API/axiosInstance';
 
 export default function LkPage({ user }) {
-  const progress = user.data.progress || 40;
+  const [progress, setProgress] = useState(20);
   const [lang, setLangs] = useState([]);
   const [categories, setCategories] = useState([]);
   const [open, setOpen] = useState(false);
@@ -27,7 +27,7 @@ export default function LkPage({ user }) {
         console.error('Ошибка при загрузке данных:', error);
       });
   }, []);
-  console.log(lang)
+
   useEffect(() => {
     axiosInstance
       .get('/category')
@@ -38,8 +38,6 @@ export default function LkPage({ user }) {
         console.error('Ошибка при загрузке данных:', error);
       });
   }, []);
-
- 
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -54,25 +52,36 @@ export default function LkPage({ user }) {
       .catch((error) => {
         console.error('Ошибка при загрузке данных:', error);
       });
-     const curLang= lang.find(el => data.lang===el.name)
-     console.log("🚀 ~ addHandler ~ curLang:", curLang)
-    console.log(categ.data);
-    console.log('user:',lang)
+    const curLang = lang.find((el) => data.lang === el.name);
+
     axiosInstance
       .post('/word/add', {
         name: data.word,
         userId: user.data.id,
         categoryId: categ.data.id,
-        languageId: curLang.id ,
+        languageId: curLang.id,
       })
 
       .then(({ data }) => {
+        console.log('🚀 ~ .then ~ data:', data);
+
         setAdd(data.message || 'Успешно добавлено!');
       })
       .catch((error) => {
         console.error('Ошибка при добавлении:', error);
       });
   };
+
+  // useEffect(() => {
+  //   axiosInstance
+  //     .post('/category/like/count', { userId: user.data.id, })
+  //     .then((response) => {
+  //       setProgress(response.data.count);
+  //     })
+  //     .catch((error) => {
+  //       console.error('Ошибка при загрузке данных:', error);
+  //     });
+  // }, []);
 
   return (
     <Container
@@ -193,7 +202,7 @@ export default function LkPage({ user }) {
                           }}
                         />
                         <div variant="body1" color="text.secondary">
-                          {progress}%
+                        Прогресс: {progress}%
                         </div>
                       </div>
                     ))}
