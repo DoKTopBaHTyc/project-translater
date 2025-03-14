@@ -23,7 +23,7 @@ function WordPage({user}) {
     <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', padding: '20px' }}>
       
       {words.filter((word) => word.id === user.id || 1).map((word) => (
-        <WordsComponent deleteHandler={deleteHandler} key={word.id} card={word}/>
+        <WordsComponent user={user} deleteHandler={deleteHandler} key={word.id} card={word}/>
       ))}
     </div>
   );

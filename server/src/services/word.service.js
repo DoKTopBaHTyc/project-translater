@@ -32,13 +32,17 @@ class WordService {
     return updateword;
   }
 
-  static async deleateWord( id ) {
+  static async deleateWord(id) {
     const deletedRows = await Word.destroy({ where: { id } });
     return deletedRows;
   }
+
   static async contextWord(id) {
     const word = await Word.findByPk(id);
-    const result = await ApiContext(word);
+    const result = await ApiContext.contextText(word.name
+      
+    );
+    // const result = ['123', '123'];
     return result;
   }
 }
