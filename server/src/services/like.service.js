@@ -16,15 +16,25 @@ class LikeService {
     return studedword;
   }
 
-  static async allStudedWordByCategory({ userId, categoryId }) {
-    const studedCount = await Like.count({
-      where: {
-        userId,
-        categoryId,
-      },
+  static async allStudedWordByCategory({ userId }) {
+    const result = await Category.findAll({
+      attributes: [
+        'id',
+        'name',
+        [sequelize.fn('COUNT', sequelize.col('Likes.wordId')), 'count'],
+      ],
+      include: [
+        {
+          model: Like,
+          attributes: [],
+          where: { userId },
+          required: false,
+        },
+      ],
+      group: ['Category.id'],
+      raw: true,
     });
-
-    return studedCount;
+    return result;
   }
 }
 
