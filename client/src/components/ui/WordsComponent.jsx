@@ -2,10 +2,11 @@ import { useEffect, useState } from 'react';
 import axiosInstance from '../../API/axiosInstance';
 import { useParams } from 'react-router';
 
-function WordsComponent({ deleteHandler, card }) {
+function WordsComponent({ user, deleteHandler, card }) {
   const [isFlipped, setIsFlipped] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
   const { categoryId } = useParams();
+  const [context, setContext] = useState([]);
   useEffect(() => {
     const savedState = localStorage.getItem(`card_${card.id}_flipped`);
     if (savedState === 'true') {
@@ -13,7 +14,6 @@ function WordsComponent({ deleteHandler, card }) {
       setIsDisabled(true);
     }
   }, [card.id]);
-
   const handleDelete = async () => {
     try {
       await axiosInstance.delete(`/word/deleate/${card.id}`);
@@ -23,6 +23,19 @@ function WordsComponent({ deleteHandler, card }) {
     }
   };
 
+  const contextHandle = () => {
+    try {
+      axiosInstance.get(`/word/context/${card.id}`)
+      .then(({data}) => setContext(data))
+      .catch((err) => console.log(err))
+      if (response.status === 200) {
+        console.log('Данные успешно отправлены:', response.data);
+      }
+    } catch (error) {
+      console.error('Ошибка при отправке данных:', error);
+    }
+  }
+
   const handleClick = async () => {
     if (!isDisabled) {
       setIsFlipped(true);
@@ -31,8 +44,9 @@ function WordsComponent({ deleteHandler, card }) {
 
       try {
         const response = await axiosInstance.post('/category/like/add', {
+          userId: user.data.id,
           wordId: card.id,
-          categoryId,
+          categoryId: Number(categoryId),
         });
         if (response.status === 200) {
           console.log('Данные успешно отправлены:', response.data);
@@ -137,7 +151,7 @@ function WordsComponent({ deleteHandler, card }) {
           >
             Удалить
           </button>
-          <button
+          <button onClick={contextHandle}
             style={{
               background: '#4d79ff',
               border: 'none',
@@ -153,6 +167,12 @@ function WordsComponent({ deleteHandler, card }) {
           </button>
           </div>
         </div>
+      </div>
+      <div>
+      {context[0]}
+      </div>
+      <div>
+        {context[1]}
       </div>
     </div>
   );

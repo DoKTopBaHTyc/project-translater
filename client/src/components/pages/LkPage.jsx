@@ -21,14 +21,14 @@ export default function LkPage({ user }) {
 
   useEffect(() => {
     axiosInstance
-      .post('/category/like/count', { userId: user.data.id })
+      .post('/category/like/count')
       .then((response) => {
         setProgress(response.data);
       })
       .catch((error) => {
         console.error('Ошибка при загрузке данных:', error);
       });
-  }, [user.data.id]);
+  }, []);
 
   useEffect(() => {
     axiosInstance
@@ -83,9 +83,9 @@ export default function LkPage({ user }) {
   };
 
   const handlclear = () => {
-    localStorage.clear()
-    setProgress([])
-  }
+    localStorage.clear();
+    setProgress([]);
+  };
 
   return (
     <Container
@@ -107,7 +107,12 @@ export default function LkPage({ user }) {
         </Button>
         <Button
           onClick={handlclear}
-          style={{ backgroundColor: 'black', border: 'none', color: 'white', marginLeft:'20px' }}
+          style={{
+            backgroundColor: 'black',
+            border: 'none',
+            color: 'white',
+            marginLeft: '20px',
+          }}
         >
           Сбросить прогресс
         </Button>
@@ -150,11 +155,7 @@ export default function LkPage({ user }) {
               />
 
               <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  type="submit"
-                >
+                <Button variant="contained" color="primary" type="submit">
                   Добавить
                 </Button>
                 <Button variant="contained" color="primary" onClick={handleClose}>
@@ -207,7 +208,7 @@ export default function LkPage({ user }) {
                       const count = categoryProgress
                         ? parseInt(categoryProgress.count)
                         : 0;
-                        const totalcount = categoryProgress
+                      const totalcount = categoryProgress
                         ? parseInt(categoryProgress.totalCount)
                         : 0;
 
