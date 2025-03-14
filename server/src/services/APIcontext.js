@@ -1,13 +1,14 @@
+require('dotenv').config();
+const YandexAuth = require('./YandexAuth');
+
 class ApiContext {
   static async contextText(word) {
-    const IAM_TOKEN =
-      't1.9euelZqZycnIi5CczZrNnMrGjI2ZyO3rnpWanc-ZzsaNlJTImpONnpSKjI_l8_dSVzBB-e9-JzFU_t3z9xIGLkH5734nMVT-zef1656VmpHOmZubmprKz5zLkZOeksjP7_zF656VmpHOmZubmprKz5zLkZOeksjP.h1HYkC3ItleSDxDBfJfa93zBSSBE1M3cSOZqZfbOqHvjJzmNO4e2Ia4bL7TL17MkWeAzxoqK6YBSPBFe7xM0AA';
     const API_URL = 'https://llm.api.cloud.yandex.net/foundationModels/v1/completion';
-    const FOLDER_ID = 'b1ggra6on9uq4vsogm10';
+    const FOLDER_ID = process.env.YANDEX_FOLDER_ID;
     const response = await fetch(API_URL, {
       method: 'POST',
       headers: {
-        Authorization: `Bearer ${IAM_TOKEN}`,
+        Authorization: `Bearer ${await YandexAuth.getIamToken()}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
