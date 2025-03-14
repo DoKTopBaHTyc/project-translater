@@ -204,8 +204,11 @@ export default function LkPage({ user }) {
                       const categoryProgress = progress.find(
                         (prog) => prog.id === category.id,
                       );
-                      const progressValue = categoryProgress
+                      const count = categoryProgress
                         ? parseInt(categoryProgress.count)
+                        : 0;
+                        const totalcount = categoryProgress
+                        ? parseInt(categoryProgress.totalCount)
                         : 0;
 
                       return (
@@ -213,7 +216,7 @@ export default function LkPage({ user }) {
                           {category.name}
                           <LinearProgress
                             variant="determinate"
-                            value={progressValue}
+                            value={count}
                             sx={{
                               width: '100%',
                               height: 10,
@@ -223,7 +226,7 @@ export default function LkPage({ user }) {
                             }}
                           />
                           <div variant="body1" color="text.secondary">
-                            Прогресс: {progressValue}%
+                            Прогресс: {count} из {totalcount}
                           </div>
                         </div>
                       );
