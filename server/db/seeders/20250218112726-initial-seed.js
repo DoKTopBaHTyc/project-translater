@@ -1,4 +1,5 @@
 'use strict';
+
 const bcrypt = require('bcrypt');
 
 /** @type {import('sequelize-cli').Migration} */
@@ -15,9 +16,9 @@ module.exports = {
     ]);
 
     await queryInterface.bulkInsert('Languages', [
-      { name: 'en', createdAt: new Date(), updatedAt: new Date() },
-      { name: 'ru', createdAt: new Date(), updatedAt: new Date() },
-      { name: 'ja', createdAt: new Date(), updatedAt: new Date() },
+      { name: 'en', title: 'English', createdAt: new Date(), updatedAt: new Date() },
+      { name: 'fr', title: 'French', createdAt: new Date(), updatedAt: new Date() },
+      { name: 'es', title: 'Spanish', createdAt: new Date(), updatedAt: new Date() },
     ]);
 
     await queryInterface.bulkInsert('Categories', [
