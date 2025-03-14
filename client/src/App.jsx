@@ -14,6 +14,7 @@ import LkPage from './components/pages/LkPage';
 
 import WordsPage from './components/pages/WordsPage';
 import NotFoundPage from './components/pages/NotFoundPage';
+import './App.css'
 
 function App() {
   const [user, setUser] = useState({ status: 'logging' });

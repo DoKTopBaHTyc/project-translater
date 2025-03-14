@@ -1,8 +1,10 @@
+require('dotenv').config();
 const YandexAuth = require('./YandexAuth');
+
 class ApiContext {
   static async contextText(word) {
     const API_URL = 'https://llm.api.cloud.yandex.net/foundationModels/v1/completion';
-    const FOLDER_ID = 'b1ggra6on9uq4vsogm10';
+    const FOLDER_ID = process.env.YANDEX_FOLDER_ID;
     const response = await fetch(API_URL, {
       method: 'POST',
       headers: {

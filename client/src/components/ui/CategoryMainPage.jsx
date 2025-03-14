@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 export default function Category({ card }) {
   return (
     <Link to={`/language/${card.id}/categories`} className={style.cardComponent}>
-      <p>{card.name}</p>
+      <p>{card.title}</p>
     </Link>
   );
 }

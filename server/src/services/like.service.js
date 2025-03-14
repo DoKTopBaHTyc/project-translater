@@ -58,7 +58,7 @@ class LikeService {
       categoryId: category.id,
       categoryName: category.name,
       count: userLikeCountsMap[category.id] || 0, // Количество по пользователю
-      totalCount: totalWordCountsMap[category.id] || 0, // Общее количество
+      totalCount: Number(totalWordCountsMap[category.id]) || 0, // Общее количество
     }));
     return result;
   }

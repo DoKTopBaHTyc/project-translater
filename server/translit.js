@@ -1,6 +1,8 @@
-const API_URL = 'https://llm.api.cloud.yandex.net/foundationModels/v1/completion';
-const FOLDER_ID = 'b1ggra6on9uq4vsogm10';
+require('dotenv').config();
+const API_URL = process.env.YANDEX_URL;
+const FOLDER_ID = process.env.YANDEX_FOLDER_ID;
 const YandexAuth = require('./src/services/YandexAuth');
+
 async function generateSentence(word) {
   const response = await fetch(API_URL, {
     method: 'POST',
@@ -26,12 +28,41 @@ async function generateSentence(word) {
   const data = await response.json();
   return data.result.alternatives[0].message.text;
 }
-generateSentence('tv').then((data) => console.log(data));
+generateSentence('beavers').then((data) => console.log(data));
+
+// const API_URL = 'https://llm.api.cloud.yandex.net/foundationModels/v1/completion';
+// const FOLDER_ID = 'b1ggra6on9uq4vsogm10';
+// const YandexAuth = require('./src/services/YandexAuth');
+// async function translateText(word, targetLanguage) {
+//   const response = await fetch(API_URL, {
+//     method: 'POST',
+//     headers: {
+//       Authorization: `Bearer ${await YandexAuth.getIamToken()}`,
+//       'Content-Type': 'application/json',
+//     },
+//     body: JSON.stringify({
+//       modelUri: `gpt://${FOLDER_ID}/yandexgpt/latest`,
+//       completionOptions: {
+//         stream: false,
+//         temperature: 1,
+//         maxTokens: 100,
+//       },
+//       messages: [
+//         {
+//           role: 'user',
+//           text: `Ты переводчик. Переведи слово ${word} на ${targetLanguage} с большой буквы без точки, верни только переведённое слово`,
+//         },
+//       ],
+//     }),
+//   });
+//   const data = await response.json();
+//   return data.result.alternatives[0].message.text;
+// }
+// translateText('ребенок', 'it').then((data) => console.log(data));
 
 // const axios = require('axios');
-// const YandexAuth = require('./src/services/YandexAuth');
 // async function translateText(text, targetLanguage) {
-//   const apiKey = await YandexAuth.getIamToken();
+//   const apiKey = 'AQVN1GWGTTEQBSsgmap1BSfRydGEXblcSKja8edV';
 //   const url = 'https://translate.api.cloud.yandex.net/translate/v2/translate';
 
 //   const response = await axios.post(
@@ -51,20 +82,32 @@ generateSentence('tv').then((data) => console.log(data));
 //   return response.data.translations[0].text;
 // }
 
-// translateText('Орёл', 'en').then((translatedText) => {
+// translateText('Бобёр', 'ja').then((translatedText) => {
 //   console.log(translatedText);
 // });
 
+// const YandexAuth = require('./src/services/YandexAuth');
 // const axios = require('axios');
+// require('dotenv').config();
 
-// class YandexAuth {
-//   static async getIamToken() {
-//     const response = await axios.post('https://iam.api.cloud.yandex.net/iam/v1/tokens', {
-//       yandexPassportOauthToken: process.env.YANDEX_OAUTH_TOKEN,
-//     });
+// async function createNewApiKey() {
+//   const url = 'https://iam.api.cloud.yandex.net/iam/v1/apiKeys';
+//   const response = await axios.post(
+//     url,
+//     {
+//       serviceAccountId: process.env.YANDEX_FOLDER_ID,
+//       description: 'Auto-generated API key',
+//     },
+//     {
+//       headers: {
+//         Authorization: `Bearer ${await YandexAuth.getIamToken()}`,
+//       },
+//     },
+//   );
 
-//     return response.data.iamToken;
-//   }
+//   return response.data.secret;
 // }
 
-// module.exports = YandexAuth;
+// createNewApiKey().then((data) => {
+//   console.log(data);
+// });

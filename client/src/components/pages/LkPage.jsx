@@ -5,19 +5,27 @@ import {
   LinearProgress,
   Box,
   TextField,
+  InputLabel,
+  Select,
+  MenuItem,
+  FormControl,
+  List,
+  ListItem,
+  Button,
+  Modal,
 } from '@mui/material';
-import { List, ListItem, Button, Modal } from '@mui/material';
 import { useEffect, useState } from 'react';
 import axiosInstance from '../../API/axiosInstance';
 
 export default function LkPage({ user }) {
-  const [progress, setProgress] = useState([]);
-  console.log('🚀 ~ LkPage ~ progress:', progress);
+  const [progress, setProgress] = useState([])
   const [lang, setLangs] = useState([]);
-  console.log('🚀 ~ LkPage ~ lang:', lang);
   const [categories, setCategories] = useState([]);
   const [open, setOpen] = useState(false);
   const [add, setAdd] = useState('');
+  const [selectedLang, setSelectedLang] = useState(''); // Состояние для выбранного языка
+  console.log('🚀 ~ LkPage ~ selectedLang:', selectedLang);
+
 
   useEffect(() => {
     axiosInstance
@@ -60,34 +68,35 @@ export default function LkPage({ user }) {
     const formData = new FormData(event.target);
     const data = Object.fromEntries(formData);
     console.log(data);
-    const categ = await axiosInstance
-      .post('/category/name', { name: data.category })
-      .catch((error) => {
-        console.error('Ошибка при загрузке данных:', error);
-      });
-    const curLang = lang.find((el) => data.lang === el.title);
 
-    axiosInstance
-      .post('/word/add', {
+    try {
+      const categ = await axiosInstance.post('/category/name', { name: data.category });
+      const curLang = lang.find((el) => el.id === selectedLang);
+      console.log('🚀 ~ addHandler ~ curLang:', curLang);
+
+      const wordResponse = await axiosInstance.post('/word/add', {
         name: data.word,
         userId: user.data.id,
         categoryId: categ.data.id,
         languageId: curLang.id,
-      })
-      .then(({ data }) => {
-        setAdd(data.message || 'Успешно добавлено!');
-      })
-      .catch((error) => {
-        console.error('Ошибка при добавлении:', error);
       });
+
+      setAdd(wordResponse.data.message || 'Успешно добавлено!');
+    } catch (error) {
+      console.error('Ошибка при добавлении:', error);
+    }
   };
 
-  const handlclear = async () => {
-    await axiosInstance.post('/category/like/delete', { userId: user.data.id });
-
-    setProgress((prev) => prev.map((el) => ({ ...el, count: 0 })));
-    localStorage.clear();
+  const handleClear = async () => {
+    try {
+      await axiosInstance.post('/category/like/delete', { userId: user.data.id });
+      setProgress((prev) => prev.map((el) => ({ ...el, count: 0 })));
+      localStorage.clear();
+    } catch (error) {
+      console.error('Ошибка при очистке данных:', error);
+    }
   };
+
 
   return (
     <Container
@@ -108,7 +117,7 @@ export default function LkPage({ user }) {
           Добавить новую карточку
         </Button>
         <Button
-          onClick={handlclear}
+          onClick={handleClear}
           style={{
             backgroundColor: 'black',
             border: 'none',
@@ -134,19 +143,31 @@ export default function LkPage({ user }) {
             }}
           >
             <form onSubmit={addHandler}>
-              <TextField
-                fullWidth
-                label="Язык"
-                variant="outlined"
-                name="lang"
-                sx={{ mb: 2 }}
-              />
+              <FormControl fullWidth sx={{ mb: 2 }}>
+                <InputLabel id="lang-select-label">Язык</InputLabel>
+                <Select
+                  labelId="lang-select-label"
+                  id="lang-select"
+                  value={selectedLang}
+                  label="Язык"
+                  onChange={(e) => setSelectedLang(e.target.value)}
+                  required
+                >
+                  {lang.map((lan) => (
+                    <MenuItem key={lan.id} value={lan.id}>
+                      {lan.title}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+
               <TextField
                 fullWidth
                 label="Категория"
                 variant="outlined"
                 name="category"
                 sx={{ mb: 2 }}
+                required
               />
               <TextField
                 fullWidth
@@ -154,6 +175,7 @@ export default function LkPage({ user }) {
                 variant="outlined"
                 name="word"
                 sx={{ mb: 2 }}
+                required
               />
 
               <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
@@ -196,34 +218,33 @@ export default function LkPage({ user }) {
                     alignItems: 'center',
                   }}
                 >
-                  <p variant="body1" color="text.secondary">
-                    Ваш прогресс в языке: {el.name}
-                  </p>
+                  <h4 variant="body1" color="text.secondary">
+                    {el.title}
+                  </h4>
                 </Box>
                 <Box sx={{ mt: 1 }}>
                   <div variant="body2" color="text.secondary">
                     Категории:
-                    {progress.map((category) => {
-                      return (
-                        <div key={category.id}>
-                          {category.categoryName}
-                          <LinearProgress
-                            variant="determinate"
-                            value={category.count}
-                            sx={{
-                              width: '100%',
-                              height: 10,
-                              borderRadius: 5,
-                              backgroundColor: '#e0e0e0',
-                              '& .MuiLinearProgress-bar': { backgroundColor: '#2ecc71' },
-                            }}
-                          />
-                          <div variant="body1" color="text.secondary">
-                            Прогресс: {category.count} из {category.totalCount}
-                          </div>
+                    {progress.map((category) => (
+                      <div key={category.id}>
+                        {category.categoryName}
+              
+                        <LinearProgress
+                          variant="determinate"
+                          value={(category.count / category.totalCount) * 100}
+                          sx={{
+                            width: '100%',
+                            height: 10,
+                            borderRadius: 5,
+                            backgroundColor: '#e0e0e0',
+                            '& .MuiLinearProgress-bar': { backgroundColor: '#2ecc71' },
+                          }}
+                        />
+                        <div variant="body1" color="text.secondary">
+                          Прогресс: {category.count} из {Number(category.totalCount)}
                         </div>
-                      );
-                    })}
+                      </div>
+                    ))}
                   </div>
                 </Box>
               </ListItem>
