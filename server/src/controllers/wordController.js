@@ -31,6 +31,16 @@ class WordController {
       res.sendStatus(500);
     }
   }
+  static async contextWord(req, res) {
+    try {
+      const id = +req.params.id
+      const word = await WordService.contextWord(id);
+      res.status(200).json(word);
+    } catch (error) {
+      console.log(error);
+      res.sendStatus(500);
+    }
+  }
 }
 
 module.exports = WordController;

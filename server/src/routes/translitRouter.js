@@ -1,4 +1,5 @@
 const translitRouter = require('express').Router();
+const { verifyToken } = require('../middlewares/verifyTokens');
 
 const CategoryController = require('../controllers/categoryController');
 const LanguageController = require('../controllers/languageController');
@@ -17,7 +18,7 @@ translitRouter.post('/category/name', CategoryController.getCategoryName);
 
 translitRouter.post('/category/like', LikeController.wordStuded);
 
-translitRouter.post('/category/like/add', LikeController.createStudedWord);
+translitRouter.post('/category/like/add', verifyToken, LikeController.createStudedWord);
 
 translitRouter.post('/category/like/count', LikeController.allStudedWordByCategory);
 
@@ -28,9 +29,9 @@ translitRouter.get(
 
 translitRouter.put('/translation/update', TranslationController.updateTranslation);
 
-
 translitRouter.post('/word/add', WordController.createWord);
 translitRouter.put('/word/update', WordController.updateWord);
 translitRouter.delete('/word/deleate/:id', WordController.deleateWord);
+translitRouter.post('/word/context', WordController.contextWord);
 
 module.exports = translitRouter;
