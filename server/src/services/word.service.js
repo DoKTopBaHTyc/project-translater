@@ -39,10 +39,7 @@ class WordService {
 
   static async contextWord(id) {
     const word = await Word.findByPk(id);
-    const result = await ApiContext.contextText(word.name
-      
-    );
-    // const result = ['123', '123'];
+    const result = await ApiContext.contextText(word.name);
     return result;
   }
 }
