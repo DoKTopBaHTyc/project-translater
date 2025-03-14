@@ -22,54 +22,54 @@ class LikeService {
   }
 
   static async allStudedWordByCategory({ userId, languageId }) {
-      const likeCounts = await Like.findAll({
-        attributes: [
-          [Sequelize.col('Like.categoryId'), 'categoryId'], // Явно указываем таблицу
-          [Sequelize.fn('COUNT', Sequelize.col('Like.id')), 'count'],
-        ],
-        include: [
-          {
-            model: Word,
-            attributes: [],
-            include: [
-              {
-                model: Translation,
-                attributes: [],
-                where: { languageId }, // Фильтруем по languageId
-                required: true, // Используем INNER JOIN
-              },
-            ],
-            required: true, // Используем INNER JOIN
-          },
-        ],
-        where: { userId }, // Фильтруем по userId
-        group: ['Like.categoryId'], // Явно указываем таблицу для группировки
-        raw: true, // Возвращаем сырые данные
-      });
-  
-      // Шаг 2: Получаем общее количество слов по languageId для каждой категории
-      const totalCounts = await Word.findAll({
-        attributes: [
-          [Sequelize.col('Word.categoryId'), 'categoryId'], // Явно указываем таблицу
-          [Sequelize.fn('COUNT', Sequelize.col('Word.id')), 'totalCount'],
-        ],
-        include: [
-          {
-            model: Translation,
-            attributes: [],
-            where: { languageId }, // Фильтруем по languageId
-            required: true, // Используем INNER JOIN
-          },
-        ],
-        group: ['Word.categoryId'], // Явно указываем таблицу для группировки
-        raw: true, // Возвращаем сырые данные
-      });
-  
-      // Шаг 3: Получаем информацию о категориях
-      const categories = await Category.findAll({
-        attributes: ['id', 'name'], // Получаем id и name категорий
-        raw: true,
-      });
+    const likeCounts = await Like.findAll({
+      attributes: [
+        [Sequelize.col('Like.categoryId'), 'categoryId'], // Явно указываем таблицу
+        [Sequelize.fn('COUNT', Sequelize.col('Like.id')), 'count'],
+      ],
+      include: [
+        {
+          model: Word,
+          attributes: [],
+          include: [
+            {
+              model: Translation,
+              attributes: [],
+              where: { languageId }, // Фильтруем по languageId
+              required: true, // Используем INNER JOIN
+            },
+          ],
+          required: true, // Используем INNER JOIN
+        },
+      ],
+      where: { userId }, // Фильтруем по userId
+      group: ['Like.categoryId'], // Явно указываем таблицу для группировки
+      raw: true, // Возвращаем сырые данные
+    });
+
+    // Шаг 2: Получаем общее количество слов по languageId для каждой категории
+    const totalCounts = await Word.findAll({
+      attributes: [
+        [Sequelize.col('Word.categoryId'), 'categoryId'], // Явно указываем таблицу
+        [Sequelize.fn('COUNT', Sequelize.col('Word.id')), 'totalCount'],
+      ],
+      include: [
+        {
+          model: Translation,
+          attributes: [],
+          where: { languageId }, // Фильтруем по languageId
+          required: true, // Используем INNER JOIN
+        },
+      ],
+      group: ['Word.categoryId'], // Явно указываем таблицу для группировки
+      raw: true, // Возвращаем сырые данные
+    });
+
+    // Шаг 3: Получаем информацию о категориях
+    const categories = await Category.findAll({
+      attributes: ['id', 'name'], // Получаем id и name категорий
+      raw: true,
+    });
 
     const result = categories.map((category) => {
       const likeCount =
@@ -81,31 +81,12 @@ class LikeService {
         categoryId: category.id,
         categoryName: category.name,
         count: likeCount,
-        totalCount, 
+        totalCount,
       };
     });
 
-    const userLikeCountsMap = userLikeCounts.reduce((acc, item) => {
-      acc[item.categoryId] = item.count;
-      return acc;
-    }, {});
-
-    const totalWordCountsMap = totalWordCounts.reduce((acc, item) => {
-      acc[item.categoryId] = item.totalCount;
-      return acc;
-    }, {});
-
-    const result = categories.map((category) => ({
-      categoryId: category.id,
-      categoryName: category.name,
-      count: userLikeCountsMap[category.id] || 0, // Количество по пользователю
-      totalCount: Number(totalWordCountsMap[category.id]) || 0, // Общее количество
-    }));
     return result;
   }
-
-  
-
 }
 
 module.exports = LikeService;

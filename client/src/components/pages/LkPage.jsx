@@ -18,14 +18,13 @@ import { useEffect, useState } from 'react';
 import axiosInstance from '../../API/axiosInstance';
 
 export default function LkPage({ user }) {
-  const [progress, setProgress] = useState([])
+  const [progress, setProgress] = useState([]);
   const [lang, setLangs] = useState([]);
   const [categories, setCategories] = useState([]);
   const [open, setOpen] = useState(false);
   const [add, setAdd] = useState('');
-  const [selectedLang, setSelectedLang] = useState(''); // Состояние для выбранного языка
+  const [selectedLang, setSelectedLang] = useState('');
   console.log('🚀 ~ LkPage ~ selectedLang:', selectedLang);
-
 
   useEffect(() => {
     axiosInstance
@@ -96,7 +95,6 @@ export default function LkPage({ user }) {
       console.error('Ошибка при очистке данных:', error);
     }
   };
-
 
   return (
     <Container
@@ -198,57 +196,49 @@ export default function LkPage({ user }) {
           >
             Твой прогресс
           </h2>
-
           <List sx={{ mt: 2 }}>
-            {lang.map((el) => (
-              <ListItem
-                key={el.id}
+            <ListItem
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'flex-start',
+                gap: 1,
+              }}
+            >
+              <Box
                 sx={{
+                  width: '100%',
                   display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'flex-start',
-                  gap: 1,
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
                 }}
-              >
-                <Box
-                  sx={{
-                    width: '100%',
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                  }}
-                >
-                  <h4 variant="body1" color="text.secondary">
-                    {el.title}
-                  </h4>
-                </Box>
-                <Box sx={{ mt: 1 }}>
-                  <div variant="body2" color="text.secondary">
-                    Категории:
-                    {progress.map((category) => (
-                      <div key={category.id}>
-                        {category.categoryName}
-              
-                        <LinearProgress
-                          variant="determinate"
-                          value={(category.count / category.totalCount) * 100}
-                          sx={{
-                            width: '100%',
-                            height: 10,
-                            borderRadius: 5,
-                            backgroundColor: '#e0e0e0',
-                            '& .MuiLinearProgress-bar': { backgroundColor: '#2ecc71' },
-                          }}
-                        />
-                        <div variant="body1" color="text.secondary">
-                          Прогресс: {category.count} из {Number(category.totalCount)}
-                        </div>
+              ></Box>
+              <Box sx={{ mt: 1 }}>
+                <div variant="body2" color="text.secondary">
+                  Категории:
+                  {progress.map((category) => (
+                    <div key={category.id}>
+                      {category.categoryName}
+
+                      <LinearProgress
+                        variant="determinate"
+                        value={(category.count / category.totalCount) * 100}
+                        sx={{
+                          width: '100%',
+                          height: 10,
+                          borderRadius: 5,
+                          backgroundColor: '#e0e0e0',
+                          '& .MuiLinearProgress-bar': { backgroundColor: '#2ecc71' },
+                        }}
+                      />
+                      <div variant="body1" color="text.secondary">
+                        Прогресс: {category.count} из {Number(category.totalCount)}
                       </div>
-                    ))}
-                  </div>
-                </Box>
-              </ListItem>
-            ))}
+                    </div>
+                  ))}
+                </div>
+              </Box>
+            </ListItem>
           </List>
         </CardContent>
       </Card>
