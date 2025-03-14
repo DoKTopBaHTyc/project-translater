@@ -18,7 +18,7 @@ translitRouter.post('/category/name', CategoryController.getCategoryName);
 
 translitRouter.post('/category/like', LikeController.wordStuded);
 
-translitRouter.post('/category/like/add', verifyToken, LikeController.createStudedWord);
+translitRouter.post('/category/like/add', verifyRefreshToken, LikeController.createStudedWord);
 
 translitRouter.post('/category/like/count', LikeController.allStudedWordByCategory);
 

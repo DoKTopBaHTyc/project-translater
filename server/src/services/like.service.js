@@ -1,4 +1,4 @@
-const { Like } = require('../../db/models');
+const { Like, Category, sequelize } = require('../../db/models');
 
 class LikeService {
   static async WordStuded({ wordId }) {
