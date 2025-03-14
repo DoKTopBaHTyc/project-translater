@@ -43,8 +43,8 @@ class CategoryController {
 
   static async getCategoryName(req, res) {
     try {
-      const name = req.body.name.trim();
-      const category = await CategoryService.getCategoryByName(name);
+      const { name } = req.body;
+      const category = await CategoryService.getCategoryByName(name.trim());
       res.status(200).json(category);
     } catch (error) {
       console.log(error);

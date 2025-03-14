@@ -16,8 +16,6 @@ export default function LkPage({ user }) {
   const [categories, setCategories] = useState([]);
   const [open, setOpen] = useState(false);
   const [add, setAdd] = useState('');
-  const [categ, setCateg] = useState('');
-  console.log('🚀 ~ LkPage ~ categ:', categ);
 
   useEffect(() => {
     axiosInstance
@@ -29,7 +27,7 @@ export default function LkPage({ user }) {
         console.error('Ошибка при загрузке данных:', error);
       });
   }, []);
-
+  console.log(lang)
   useEffect(() => {
     axiosInstance
       .get('/category')
@@ -41,33 +39,33 @@ export default function LkPage({ user }) {
       });
   }, []);
 
-  // useEffect(() => {
-  //   axiosInstance
-  //     .post('/category/name')
-  //     .then((response) => {
-  //       setCateg(response.data);
-  //     })
-  //     .catch((error) => {
-  //       console.error('Ошибка при загрузке данных:', error);
-  //     });
-  // }, []);
-
-  const categoryMap = categories.map((el) => el);
+ 
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const addHandler = (event) => {
+  const addHandler = async (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
     const data = Object.fromEntries(formData);
-    const selectedCategory = categories.find((cat) => cat.name === data.category);
+    console.log(data);
+    const categ = await axiosInstance
+      .post('/category/name', { name: data.category })
+      .catch((error) => {
+        console.error('Ошибка при загрузке данных:', error);
+      });
+     const curLang= lang.find(el => data.lang===el.name)
+     console.log("🚀 ~ addHandler ~ curLang:", curLang)
+    console.log(categ.data);
+    console.log('user:',lang)
     axiosInstance
       .post('/word/add', {
         name: data.word,
         userId: user.data.id,
-        categoryId: selectedCategory.id,
+        categoryId: categ.data.id,
+        languageId: curLang.id ,
       })
+
       .then(({ data }) => {
         setAdd(data.message || 'Успешно добавлено!');
       })
