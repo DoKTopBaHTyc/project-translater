@@ -18,7 +18,6 @@ class LikeController {
         ...req.body,
         userId: res.locals.user.id,
       });
-
       res.status(200).json(studedword);
     } catch (error) {
       console.log(error);
