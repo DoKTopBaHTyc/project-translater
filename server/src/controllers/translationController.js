@@ -25,15 +25,6 @@ class TranslationController {
     }
   }
 
-  static async deleateTranslation(req, res) {
-    try {
-      const word = await TranslateService.deleateTranslation(req.body);
-      res.status(200).json(word);
-    } catch (error) {
-      console.log(error);
-      res.sendStatus(500);
-    }
-  }
 
   static async checkTranslit(req, res) {
     try {

@@ -2,13 +2,13 @@ const axios = require('axios');
 
 class ApiTranslate {
   static async translateText(text, targetLanguage) {
-    const apiKey = 'AQVN2sBsUfu6f0a_tUiNwhoe_MbU1JIZYN-wxY8k';
+    const apiKey = 'AQVN2gI4--IJiIIPjguzulR44UaE23UNlB7_60AY';
     const url = 'https://translate.api.cloud.yandex.net/translate/v2/translate';
 
     const response = await axios.post(
       url,
       {
-        folderId: 'b1gvrtc5c3p9ej8oeisv',
+        folderId: 'b1ggra6on9uq4vsogm10',
         texts: [text],
         targetLanguageCode: targetLanguage,
       },

@@ -1,11 +1,11 @@
 const { Word, Translation, Language } = require('../../db/models');
 const ApiTranslate = require('../services/APItranslate');
+const ApiContext = require('./APIcontext');
 
 class WordService {
   static async createWord({ name, userId, categoryId, languageId }) {
-    const prevword = await Word.findOne({ where: { name } }
-    );
-    if (prevword !== undefined) {
+    const prevword = await Word.findOne({ where: { name } });
+    if (prevword) {
       throw new Error(`Данное слово уже существует`);
     }
     const word = await Word.create({ name, userId, categoryId });
@@ -32,9 +32,14 @@ class WordService {
     return updateword;
   }
 
-  static async deleateWord({ id }) {
+  static async deleateWord( id ) {
     const deletedRows = await Word.destroy({ where: { id } });
     return deletedRows;
+  }
+  static async contextWord(id) {
+    const word = await Word.findByPk(id);
+    const result = await ApiContext(word);
+    return result;
   }
 }
 
