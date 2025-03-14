@@ -28,11 +28,6 @@ class TranslateService {
     return updateword;
   }
 
-  static async deleateTranslation({ id }) {
-    const deletedRows = await Translation.destroy({ where: { id } });
-    return deletedRows;
-  }
-
   static async checkTranslit({ translation, id }) {
     const word = await Translation.findByPk(id);
     if (word.translation.trim().toLowerCase() !== translation.trim().toLowerCase()) {

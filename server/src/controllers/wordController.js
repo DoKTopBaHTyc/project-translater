@@ -23,7 +23,8 @@ class WordController {
 
   static async deleateWord(req, res) {
     try {
-      const word = await WordService.deleateWord(req.body);
+      const id = + req.params.id
+      const word = await WordService.deleateWord(id);
       res.status(200).json(word);
     } catch (error) {
       console.log(error);
