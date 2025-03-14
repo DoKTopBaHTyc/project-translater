@@ -14,10 +14,7 @@ class LikeController {
   static async createStudedWord(req, res) {
     try {
 
-      const studedword = await LikeService.createStudedWord({
-        ...req.body,
-        userId: res.locals.user.id,
-      });
+      const studedword = await LikeService.createStudedWord(req.body);
       res.status(200).json(studedword);
     } catch (error) {
       console.log(error);
@@ -29,6 +26,16 @@ class LikeController {
     try {
       const studedCount = await LikeService.allStudedWordByCategory(req.body);
       res.status(200).json(studedCount);
+    } catch (error) {
+      console.log(error);
+      res.sendStatus(500);
+    }
+  }
+
+  static async deleteLikeByUser(req, res) {
+    try {
+      const likes = await LikeService.deleteLikeByUser(req.body);
+      res.status(200).json(likes);
     } catch (error) {
       console.log(error);
       res.sendStatus(500);

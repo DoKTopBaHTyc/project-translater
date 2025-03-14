@@ -18,8 +18,9 @@ translitRouter.post('/category/name', CategoryController.getCategoryName);
 
 translitRouter.post('/category/like', LikeController.wordStuded);
 
-translitRouter.post('/category/like/add', verifyAccessToken, LikeController.createStudedWord);
 
+translitRouter.post('/category/like/add', verifyAccessToken, LikeController.createStudedWord);
+translitRouter.post('/category/like/delete',LikeController.deleteLikeByUser)
 
 translitRouter.post('/category/like/count', LikeController.allStudedWordByCategory);
 
@@ -32,7 +33,7 @@ translitRouter.put('/translation/update', TranslationController.updateTranslatio
 
 translitRouter.post('/word/add', WordController.createWord);
 translitRouter.put('/word/update', WordController.updateWord);
-translitRouter.delete('/word/deleate/:id', WordController.deleateWord);
+translitRouter.delete('/word/delete/:id', WordController.deleateWord);
 translitRouter.get('/word/context/:id', WordController.contextWord);
 
 module.exports = translitRouter;
