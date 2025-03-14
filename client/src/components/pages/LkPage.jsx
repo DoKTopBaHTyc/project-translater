@@ -11,11 +11,24 @@ import { useEffect, useState } from 'react';
 import axiosInstance from '../../API/axiosInstance';
 
 export default function LkPage({ user }) {
-  const [progress, setProgress] = useState(20);
+  const [progress, setProgress] = useState([]);
+  console.log('🚀 ~ LkPage ~ progress:', progress);
   const [lang, setLangs] = useState([]);
+  console.log('🚀 ~ LkPage ~ lang:', lang);
   const [categories, setCategories] = useState([]);
   const [open, setOpen] = useState(false);
   const [add, setAdd] = useState('');
+
+  useEffect(() => {
+    axiosInstance
+      .post('/category/like/count', { userId: user.data.id })
+      .then((response) => {
+        setProgress(response.data);
+      })
+      .catch((error) => {
+        console.error('Ошибка при загрузке данных:', error);
+      });
+  }, [user.data.id]);
 
   useEffect(() => {
     axiosInstance
@@ -61,10 +74,7 @@ export default function LkPage({ user }) {
         categoryId: categ.data.id,
         languageId: curLang.id,
       })
-
       .then(({ data }) => {
-        console.log('🚀 ~ .then ~ data:', data);
-
         setAdd(data.message || 'Успешно добавлено!');
       })
       .catch((error) => {
@@ -72,16 +82,10 @@ export default function LkPage({ user }) {
       });
   };
 
-  // useEffect(() => {
-  //   axiosInstance
-  //     .post('/category/like/count', { userId: user.data.id, })
-  //     .then((response) => {
-  //       setProgress(response.data.count);
-  //     })
-  //     .catch((error) => {
-  //       console.error('Ошибка при загрузке данных:', error);
-  //     });
-  // }, []);
+  const handlclear = () => {
+    localStorage.clear()
+    setProgress([])
+  }
 
   return (
     <Container
@@ -100,6 +104,12 @@ export default function LkPage({ user }) {
           style={{ backgroundColor: 'black', border: 'none', color: 'white' }}
         >
           Добавить новую карточку
+        </Button>
+        <Button
+          onClick={handlclear}
+          style={{ backgroundColor: 'black', border: 'none', color: 'white', marginLeft:'20px' }}
+        >
+          Сбросить прогресс
         </Button>
 
         <Modal open={open} onClose={handleClose}>
@@ -140,10 +150,13 @@ export default function LkPage({ user }) {
               />
 
               <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
-                <Button variant="contained" color="primary" type="submit">
+                <Button
+                  variant="contained"
+                  color="primary"
+                  type="submit"
+                >
                   Добавить
                 </Button>
-
                 <Button variant="contained" color="primary" onClick={handleClose}>
                   Отмена
                 </Button>
@@ -187,25 +200,34 @@ export default function LkPage({ user }) {
                 <Box sx={{ mt: 1 }}>
                   <div variant="body2" color="text.secondary">
                     Категории:
-                    {categories.map((category) => (
-                      <div key={category.id}>
-                        {category.name}
-                        <LinearProgress
-                          variant="determinate"
-                          value={progress}
-                          sx={{
-                            width: '100%',
-                            height: 10,
-                            borderRadius: 5,
-                            backgroundColor: '#e0e0e0',
-                            '& .MuiLinearProgress-bar': { backgroundColor: '#2ecc71' },
-                          }}
-                        />
-                        <div variant="body1" color="text.secondary">
-                        Прогресс: {progress}%
+                    {categories.map((category) => {
+                      const categoryProgress = progress.find(
+                        (prog) => prog.id === category.id,
+                      );
+                      const progressValue = categoryProgress
+                        ? parseInt(categoryProgress.count)
+                        : 0;
+
+                      return (
+                        <div key={category.id}>
+                          {category.name}
+                          <LinearProgress
+                            variant="determinate"
+                            value={progressValue}
+                            sx={{
+                              width: '100%',
+                              height: 10,
+                              borderRadius: 5,
+                              backgroundColor: '#e0e0e0',
+                              '& .MuiLinearProgress-bar': { backgroundColor: '#2ecc71' },
+                            }}
+                          />
+                          <div variant="body1" color="text.secondary">
+                            Прогресс: {progressValue}%
+                          </div>
                         </div>
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
                 </Box>
               </ListItem>
