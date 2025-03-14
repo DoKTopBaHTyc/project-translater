@@ -29,6 +29,7 @@ class ApiContext {
     const data = await response.json();
     return data.result.alternatives[0].message.text;
   }
+  
 }
 
 module.exports = ApiContext;

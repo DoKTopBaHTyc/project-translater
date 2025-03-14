@@ -22,5 +22,4 @@ class ApiTranslate {
     return response.data.translations[0].text;
   }
 }
-
 module.exports = ApiTranslate;
