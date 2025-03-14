@@ -18,7 +18,7 @@ class LikeService {
 
   static async deleteLikeByUser({ userId }) {
     const likes = await Like.destroy({ where: { userId } });
-     return likes
+    return likes;
   }
 
   static async allStudedWordByCategory({ userId }) {
@@ -27,8 +27,8 @@ class LikeService {
         'categoryId',
         [sequelize.fn('COUNT', sequelize.col('wordId')), 'count'],
       ],
-      where: { userId }, // Фильтруем по userId
-      group: ['categoryId'], // Группируем по categoryId
+      where: { userId },
+      group: ['categoryId'],
       raw: true,
     });
     const totalWordCounts = await Word.findAll({
@@ -57,8 +57,8 @@ class LikeService {
     const result = categories.map((category) => ({
       categoryId: category.id,
       categoryName: category.name,
-      count: userLikeCountsMap[category.id] || 0, // Количество по пользователю
-      totalCount: totalWordCountsMap[category.id] || 0, // Общее количество
+      count: userLikeCountsMap[category.id] || 0,
+      totalCount: Number(totalWordCountsMap[category.id]) || 0,
     }));
     return result;
   }
