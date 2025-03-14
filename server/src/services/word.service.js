@@ -36,6 +36,7 @@ class WordService {
     const deletedRows = await Word.destroy({ where: { id } });
     return deletedRows;
   }
+
   static async contextWord(id) {
     const translateWord = await Translation.findOne({
       where: {

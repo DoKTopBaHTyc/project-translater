@@ -16,11 +16,16 @@ class LikeService {
     return studedword;
   }
 
+  static async deleteLikeByUser({ userId }) {
+    const likes = await Like.destroy({ where: { userId } });
+     return likes
+  }
+
   static async allStudedWordByCategory({ userId }) {
     const userLikeCounts = await Like.findAll({
       attributes: [
         'categoryId',
-        [sequelize.fn('COUNT', sequelize.col('wordId')), 'count']
+        [sequelize.fn('COUNT', sequelize.col('wordId')), 'count'],
       ],
       where: { userId }, // Фильтруем по userId
       group: ['categoryId'], // Группируем по categoryId
@@ -29,33 +34,33 @@ class LikeService {
     const totalWordCounts = await Word.findAll({
       attributes: [
         'categoryId',
-        [sequelize.fn('COUNT', sequelize.col('id')), 'totalCount']
+        [sequelize.fn('COUNT', sequelize.col('id')), 'totalCount'],
       ],
       group: ['categoryId'],
       raw: true,
     });
     const categories = await Category.findAll({
-      attributes: ['id', 'name'], 
+      attributes: ['id', 'name'],
       raw: true,
     });
-    
+
     const userLikeCountsMap = userLikeCounts.reduce((acc, item) => {
       acc[item.categoryId] = item.count;
       return acc;
     }, {});
-    
+
     const totalWordCountsMap = totalWordCounts.reduce((acc, item) => {
       acc[item.categoryId] = item.totalCount;
       return acc;
     }, {});
-    
-    const result = categories.map(category => ({
+
+    const result = categories.map((category) => ({
       categoryId: category.id,
       categoryName: category.name,
       count: userLikeCountsMap[category.id] || 0, // Количество по пользователю
       totalCount: totalWordCountsMap[category.id] || 0, // Общее количество
     }));
-  return result
+    return result;
   }
 
   
