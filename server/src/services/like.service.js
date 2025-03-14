@@ -1,4 +1,4 @@
-const { Like, Category, Word, Translation, Sequelize } = require('../../db/models');
+const { Like, Category, sequelize, Word } = require('../../db/models');
 
 class LikeService {
   static async WordStuded({ wordId }) {
@@ -21,70 +21,45 @@ class LikeService {
     return likes;
   }
 
-  static async allStudedWordByCategory({ userId, languageId }) {
-    const likeCounts = await Like.findAll({
+  static async allStudedWordByCategory({ userId }) {
+    const userLikeCounts = await Like.findAll({
       attributes: [
-        [Sequelize.col('Like.categoryId'), 'categoryId'], // Явно указываем таблицу
-        [Sequelize.fn('COUNT', Sequelize.col('Like.id')), 'count'],
+        'categoryId',
+        [sequelize.fn('COUNT', sequelize.col('wordId')), 'count'],
       ],
-      include: [
-        {
-          model: Word,
-          attributes: [],
-          include: [
-            {
-              model: Translation,
-              attributes: [],
-              where: { languageId }, // Фильтруем по languageId
-              required: true, // Используем INNER JOIN
-            },
-          ],
-          required: true, // Используем INNER JOIN
-        },
-      ],
-      where: { userId }, // Фильтруем по userId
-      group: ['Like.categoryId'], // Явно указываем таблицу для группировки
-      raw: true, // Возвращаем сырые данные
+      where: { userId },
+      group: ['categoryId'],
+      raw: true,
     });
-
-    // Шаг 2: Получаем общее количество слов по languageId для каждой категории
-    const totalCounts = await Word.findAll({
+    const totalWordCounts = await Word.findAll({
       attributes: [
-        [Sequelize.col('Word.categoryId'), 'categoryId'], // Явно указываем таблицу
-        [Sequelize.fn('COUNT', Sequelize.col('Word.id')), 'totalCount'],
+        'categoryId',
+        [sequelize.fn('COUNT', sequelize.col('id')), 'totalCount'],
       ],
-      include: [
-        {
-          model: Translation,
-          attributes: [],
-          where: { languageId }, // Фильтруем по languageId
-          required: true, // Используем INNER JOIN
-        },
-      ],
-      group: ['Word.categoryId'], // Явно указываем таблицу для группировки
-      raw: true, // Возвращаем сырые данные
+      group: ['categoryId'],
+      raw: true,
     });
-
-    // Шаг 3: Получаем информацию о категориях
     const categories = await Category.findAll({
-      attributes: ['id', 'name'], // Получаем id и name категорий
+      attributes: ['id', 'name'],
       raw: true,
     });
 
-    const result = categories.map((category) => {
-      const likeCount =
-        likeCounts.find((item) => item.categoryId === category.id)?.count || 0;
-      const totalCount =
-        totalCounts.find((item) => item.categoryId === category.id)?.totalCount || 0;
+    const userLikeCountsMap = userLikeCounts.reduce((acc, item) => {
+      acc[item.categoryId] = item.count;
+      return acc;
+    }, {});
 
-      return {
-        categoryId: category.id,
-        categoryName: category.name,
-        count: likeCount,
-        totalCount,
-      };
-    });
+    const totalWordCountsMap = totalWordCounts.reduce((acc, item) => {
+      acc[item.categoryId] = item.totalCount;
+      return acc;
+    }, {});
 
+    const result = categories.map((category) => ({
+      categoryId: category.id,
+      categoryName: category.name,
+      count: userLikeCountsMap[category.id] || 0,
+      totalCount: Number(totalWordCountsMap[category.id]) || 0,
+    }));
     return result;
   }
 }
