@@ -32,6 +32,6 @@ translitRouter.delete('/translation/deleate', TranslationController.deleateTrans
 
 translitRouter.post('/word/add', WordController.createWord);
 translitRouter.put('/word/update', WordController.updateWord);
-translitRouter.delete('/word/deleate', WordController.deleateWord);
+translitRouter.delete('/word/deleate/', WordController.deleateWord);
 
 module.exports = translitRouter;

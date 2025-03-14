@@ -75,7 +75,7 @@ function App() {
         <Route path="/language/:id/categories" element={<CategoryPage />} />
         <Route
           path="/language/:languageId/categories/:categoryId/words"
-          element={<WordsPage />}
+          element={<WordsPage user={user} />}
         />
         <Route
           path="/signup"
