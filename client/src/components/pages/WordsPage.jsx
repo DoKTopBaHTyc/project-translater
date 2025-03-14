@@ -3,7 +3,7 @@ import WordsComponent from '../ui/WordsComponent';
 import axiosInstance from '../../API/axiosInstance';
 import { useParams } from 'react-router';
 
-function WordPage() {
+function WordPage({user}) {
   const [words, setWords] = useState([]);
 
   const { languageId, categoryId } = useParams();
@@ -14,11 +14,16 @@ function WordPage() {
       .then(({ data }) => setWords(data))
       .catch((err) => console.log(err));
   }, [languageId, categoryId]);
-  console.log(words)
+
+  const deleteHandler = (id) => {
+    setWords(words.filter((word) => word.id !== id))
+  }
+
   return (
     <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', padding: '20px' }}>
-      {words.map((word) => (
-        <WordsComponent languageId={languageId} key={word.name} card={word}/>
+      
+      {words.filter((word) => word.id === user.id || 1).map((word) => (
+        <WordsComponent deleteHandler={deleteHandler} key={word.id} card={word}/>
       ))}
     </div>
   );
