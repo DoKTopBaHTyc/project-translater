@@ -1,4 +1,4 @@
-const { Like, Category, sequelize, Word } = require('../../db/models');
+const { Like, Category, Word, Translation, Sequelize } = require('../../db/models');
 
 class LikeService {
   static async WordStuded({ wordId }) {
@@ -18,30 +18,71 @@ class LikeService {
 
   static async deleteLikeByUser({ userId }) {
     const likes = await Like.destroy({ where: { userId } });
-     return likes
+    return likes;
   }
 
-  static async allStudedWordByCategory({ userId }) {
-    const userLikeCounts = await Like.findAll({
-      attributes: [
-        'categoryId',
-        [sequelize.fn('COUNT', sequelize.col('wordId')), 'count'],
-      ],
-      where: { userId }, // Фильтруем по userId
-      group: ['categoryId'], // Группируем по categoryId
-      raw: true,
-    });
-    const totalWordCounts = await Word.findAll({
-      attributes: [
-        'categoryId',
-        [sequelize.fn('COUNT', sequelize.col('id')), 'totalCount'],
-      ],
-      group: ['categoryId'],
-      raw: true,
-    });
-    const categories = await Category.findAll({
-      attributes: ['id', 'name'],
-      raw: true,
+  static async allStudedWordByCategory({ userId, languageId }) {
+      const likeCounts = await Like.findAll({
+        attributes: [
+          [Sequelize.col('Like.categoryId'), 'categoryId'], // Явно указываем таблицу
+          [Sequelize.fn('COUNT', Sequelize.col('Like.id')), 'count'],
+        ],
+        include: [
+          {
+            model: Word,
+            attributes: [],
+            include: [
+              {
+                model: Translation,
+                attributes: [],
+                where: { languageId }, // Фильтруем по languageId
+                required: true, // Используем INNER JOIN
+              },
+            ],
+            required: true, // Используем INNER JOIN
+          },
+        ],
+        where: { userId }, // Фильтруем по userId
+        group: ['Like.categoryId'], // Явно указываем таблицу для группировки
+        raw: true, // Возвращаем сырые данные
+      });
+  
+      // Шаг 2: Получаем общее количество слов по languageId для каждой категории
+      const totalCounts = await Word.findAll({
+        attributes: [
+          [Sequelize.col('Word.categoryId'), 'categoryId'], // Явно указываем таблицу
+          [Sequelize.fn('COUNT', Sequelize.col('Word.id')), 'totalCount'],
+        ],
+        include: [
+          {
+            model: Translation,
+            attributes: [],
+            where: { languageId }, // Фильтруем по languageId
+            required: true, // Используем INNER JOIN
+          },
+        ],
+        group: ['Word.categoryId'], // Явно указываем таблицу для группировки
+        raw: true, // Возвращаем сырые данные
+      });
+  
+      // Шаг 3: Получаем информацию о категориях
+      const categories = await Category.findAll({
+        attributes: ['id', 'name'], // Получаем id и name категорий
+        raw: true,
+      });
+
+    const result = categories.map((category) => {
+      const likeCount =
+        likeCounts.find((item) => item.categoryId === category.id)?.count || 0;
+      const totalCount =
+        totalCounts.find((item) => item.categoryId === category.id)?.totalCount || 0;
+
+      return {
+        categoryId: category.id,
+        categoryName: category.name,
+        count: likeCount,
+        totalCount, 
+      };
     });
 
     const userLikeCountsMap = userLikeCounts.reduce((acc, item) => {
