@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import axiosInstance from '../../API/axiosInstance';
 import { useParams } from 'react-router';
-import style from './WordsComponent.module.css'
 
 function WordsComponent({ user, deleteHandler, card }) {
   const [isFlipped, setIsFlipped] = useState(false);
@@ -23,7 +22,7 @@ function WordsComponent({ user, deleteHandler, card }) {
   }, [card.id]);
   const handleDelete = async () => {
     try {
-      await axiosInstance.delete(`/word/deleate/${card.id}`);
+      await axiosInstance.delete(`/word/delete/${card.id}`);
       deleteHandler(card.id);
     } catch (error) {
       console.log(error);
@@ -109,7 +108,6 @@ function WordsComponent({ user, deleteHandler, card }) {
           style={{
             width: '100%',
             height: '100%',
-
             backfaceVisibility: 'hidden',
             display: 'flex',
             flexDirection: 'column',
@@ -199,8 +197,6 @@ function WordsComponent({ user, deleteHandler, card }) {
               height: '150%', // Высота модального окна (80% от высоты экрана)
               maxHeight: '600px', // Максимальная высота
               textAlign: 'center',
-              // overflow: 'auto', // Добавляем прокрутку, если контент не помещается
-              // transform: 'scale(1.5)',
             }}
             onClick={(e) => e.stopPropagation()}
           >
