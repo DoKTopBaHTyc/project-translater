@@ -21,14 +21,14 @@ export default function LkPage({ user }) {
 
   useEffect(() => {
     axiosInstance
-      .post('/category/like/count')
+      .post('/category/like/count', { userId: user.data.id })
       .then((response) => {
         setProgress(response.data);
       })
       .catch((error) => {
         console.error('Ошибка при загрузке данных:', error);
       });
-  }, []);
+  }, [user.data.id]);
 
   useEffect(() => {
     axiosInstance
@@ -65,7 +65,7 @@ export default function LkPage({ user }) {
       .catch((error) => {
         console.error('Ошибка при загрузке данных:', error);
       });
-    const curLang = lang.find((el) => data.lang === el.name);
+    const curLang = lang.find((el) => data.lang === el.title);
 
     axiosInstance
       .post('/word/add', {
@@ -82,9 +82,11 @@ export default function LkPage({ user }) {
       });
   };
 
-  const handlclear = () => {
+  const handlclear = async () => {
+    await axiosInstance.post('/category/like/delete', { userId: user.data.id });
+
+    setProgress((prev) => prev.map((el) => ({ ...el, count: 0 })));
     localStorage.clear();
-    setProgress([]);
   };
 
   return (
@@ -201,23 +203,13 @@ export default function LkPage({ user }) {
                 <Box sx={{ mt: 1 }}>
                   <div variant="body2" color="text.secondary">
                     Категории:
-                    {categories.map((category) => {
-                      const categoryProgress = progress.find(
-                        (prog) => prog.id === category.id,
-                      );
-                      const count = categoryProgress
-                        ? parseInt(categoryProgress.count)
-                        : 0;
-                      const totalcount = categoryProgress
-                        ? parseInt(categoryProgress.totalCount)
-                        : 0;
-
+                    {progress.map((category) => {
                       return (
                         <div key={category.id}>
-                          {category.name}
+                          {category.categoryName}
                           <LinearProgress
                             variant="determinate"
-                            value={count}
+                            value={category.count}
                             sx={{
                               width: '100%',
                               height: 10,
@@ -227,7 +219,7 @@ export default function LkPage({ user }) {
                             }}
                           />
                           <div variant="body1" color="text.secondary">
-                            Прогресс: {count} из {totalcount}
+                            Прогресс: {category.count} из {category.totalCount}
                           </div>
                         </div>
                       );
