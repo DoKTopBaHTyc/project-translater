@@ -39,8 +39,6 @@ class WordService {
 
   static async contextWord(id) {
 
-    const word = await Word.findByPk(id);
-    const result = await ApiContext.contextText(word.name
     const translateWord = await Translation.findOne({
       where: {
         wordId: id,
