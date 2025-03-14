@@ -1,13 +1,11 @@
-const IAM_TOKEN =
-  't1.9euelZqZycnIi5CczZrNnMrGjI2ZyO3rnpWanc-ZzsaNlJTImpONnpSKjI_l8_dSVzBB-e9-JzFU_t3z9xIGLkH5734nMVT-zef1656VmpHOmZubmprKz5zLkZOeksjP7_zF656VmpHOmZubmprKz5zLkZOeksjP.h1HYkC3ItleSDxDBfJfa93zBSSBE1M3cSOZqZfbOqHvjJzmNO4e2Ia4bL7TL17MkWeAzxoqK6YBSPBFe7xM0AA';
 const API_URL = 'https://llm.api.cloud.yandex.net/foundationModels/v1/completion';
 const FOLDER_ID = 'b1ggra6on9uq4vsogm10';
-
+const YandexAuth = require('./src/services/YandexAuth');
 async function generateSentence(word) {
   const response = await fetch(API_URL, {
     method: 'POST',
     headers: {
-      Authorization: `Bearer ${IAM_TOKEN}`,
+      Authorization: `Bearer ${await YandexAuth.getIamToken()}`,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
@@ -28,5 +26,45 @@ async function generateSentence(word) {
   const data = await response.json();
   return data.result.alternatives[0].message.text;
 }
+generateSentence('tv').then((data) => console.log(data));
 
-generateSentence('Слон').then((data) => console.log(data));
+// const axios = require('axios');
+// const YandexAuth = require('./src/services/YandexAuth');
+// async function translateText(text, targetLanguage) {
+//   const apiKey = await YandexAuth.getIamToken();
+//   const url = 'https://translate.api.cloud.yandex.net/translate/v2/translate';
+
+//   const response = await axios.post(
+//     url,
+//     {
+//       folderId: 'b1ggra6on9uq4vsogm10',
+//       texts: [text],
+//       targetLanguageCode: targetLanguage,
+//     },
+//     {
+//       headers: {
+//         Authorization: `Api-Key ${apiKey}`,
+//       },
+//     },
+//   );
+
+//   return response.data.translations[0].text;
+// }
+
+// translateText('Орёл', 'en').then((translatedText) => {
+//   console.log(translatedText);
+// });
+
+// const axios = require('axios');
+
+// class YandexAuth {
+//   static async getIamToken() {
+//     const response = await axios.post('https://iam.api.cloud.yandex.net/iam/v1/tokens', {
+//       yandexPassportOauthToken: process.env.YANDEX_OAUTH_TOKEN,
+//     });
+
+//     return response.data.iamToken;
+//   }
+// }
+
+// module.exports = YandexAuth;
