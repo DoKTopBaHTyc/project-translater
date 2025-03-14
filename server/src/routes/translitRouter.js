@@ -28,11 +28,10 @@ translitRouter.get(
 );
 
 translitRouter.put('/translation/update', TranslationController.updateTranslation);
-translitRouter.delete('/translation/deleate', TranslationController.deleateTranslation);
 
 translitRouter.post('/word/add', WordController.createWord);
 translitRouter.put('/word/update', WordController.updateWord);
-translitRouter.delete('/word/deleate', WordController.deleateWord);
+translitRouter.delete('/word/deleate/:id', WordController.deleateWord);
 translitRouter.post('/word/context', WordController.contextWord);
 
 module.exports = translitRouter;
