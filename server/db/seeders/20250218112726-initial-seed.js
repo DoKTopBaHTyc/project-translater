@@ -17,7 +17,7 @@ module.exports = {
     await queryInterface.bulkInsert('Languages', [
       { name: 'en', createdAt: new Date(), updatedAt: new Date() },
       { name: 'ru', createdAt: new Date(), updatedAt: new Date() },
-      { name: 'ja', createdAt: new Date(), updatedAt: new Date() },
+      { name: 'es', createdAt: new Date(), updatedAt: new Date() },
     ]);
 
     await queryInterface.bulkInsert('Categories', [
@@ -477,7 +477,7 @@ module.exports = {
       {
         wordId: 1,
         languageId: 3,
-        translation: '猫',
+        translation: 'Gato',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -498,7 +498,7 @@ module.exports = {
       {
         wordId: 2,
         languageId: 3,
-        translation: '犬',
+        translation: 'Perro',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -519,7 +519,7 @@ module.exports = {
       {
         wordId: 3,
         languageId: 3,
-        translation: '象',
+        translation: 'Elefante',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -540,7 +540,7 @@ module.exports = {
       {
         wordId: 4,
         languageId: 3,
-        translation: '虎',
+        translation: 'Tigre',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -561,7 +561,7 @@ module.exports = {
       {
         wordId: 5,
         languageId: 3,
-        translation: 'ライオン',
+        translation: 'León',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -582,7 +582,7 @@ module.exports = {
       {
         wordId: 6,
         languageId: 3,
-        translation: '馬',
+        translation: 'Caballo',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -603,7 +603,7 @@ module.exports = {
       {
         wordId: 7,
         languageId: 3,
-        translation: 'ウサギ',
+        translation: 'Conejo',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -624,7 +624,7 @@ module.exports = {
       {
         wordId: 8,
         languageId: 3,
-        translation: '猿',
+        translation: 'Mono',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -645,7 +645,7 @@ module.exports = {
       {
         wordId: 9,
         languageId: 3,
-        translation: '熊',
+        translation: 'Oso',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -666,7 +666,7 @@ module.exports = {
       {
         wordId: 10,
         languageId: 3,
-        translation: 'キリン',
+        translation: 'Jirafa',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -687,7 +687,7 @@ module.exports = {
       {
         wordId: 11,
         languageId: 3,
-        translation: 'コンピュータ',
+        translation: 'Computadora',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -708,7 +708,7 @@ module.exports = {
       {
         wordId: 12,
         languageId: 3,
-        translation: 'スマートフォン',
+        translation: 'Teléfono inteligente',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -729,7 +729,7 @@ module.exports = {
       {
         wordId: 13,
         languageId: 3,
-        translation: 'タブレット',
+        translation: 'Tableta',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -750,7 +750,7 @@ module.exports = {
       {
         wordId: 14,
         languageId: 3,
-        translation: 'ノートパソコン',
+        translation: 'Portátil',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -771,7 +771,7 @@ module.exports = {
       {
         wordId: 15,
         languageId: 3,
-        translation: 'プリンター',
+        translation: 'Impresora',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -792,7 +792,7 @@ module.exports = {
       {
         wordId: 16,
         languageId: 3,
-        translation: 'カメラ',
+        translation: 'Cámara',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -813,7 +813,7 @@ module.exports = {
       {
         wordId: 17,
         languageId: 3,
-        translation: 'ルーター',
+        translation: 'Enrutador',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -834,7 +834,7 @@ module.exports = {
       {
         wordId: 18,
         languageId: 3,
-        translation: 'モニター',
+        translation: 'Monitor',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -855,7 +855,7 @@ module.exports = {
       {
         wordId: 19,
         languageId: 3,
-        translation: 'キーボード',
+        translation: 'Teclado',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -876,7 +876,7 @@ module.exports = {
       {
         wordId: 20,
         languageId: 3,
-        translation: 'マウス',
+        translation: 'Ratón',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -897,7 +897,7 @@ module.exports = {
       {
         wordId: 21,
         languageId: 3,
-        translation: 'ピザ',
+        translation: 'Pizza',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -918,7 +918,7 @@ module.exports = {
       {
         wordId: 22,
         languageId: 3,
-        translation: 'バーガー',
+        translation: 'Hamburguesa',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -939,7 +939,7 @@ module.exports = {
       {
         wordId: 23,
         languageId: 3,
-        translation: 'パスタ',
+        translation: 'Pasta',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -960,7 +960,7 @@ module.exports = {
       {
         wordId: 24,
         languageId: 3,
-        translation: '寿司',
+        translation: 'Sushi',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -981,7 +981,7 @@ module.exports = {
       {
         wordId: 25,
         languageId: 3,
-        translation: 'ケーキ',
+        translation: 'Pastel',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -1002,7 +1002,7 @@ module.exports = {
       {
         wordId: 26,
         languageId: 3,
-        translation: 'アイスクリーム',
+        translation: 'Helado',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -1023,7 +1023,7 @@ module.exports = {
       {
         wordId: 27,
         languageId: 3,
-        translation: 'サラダ',
+        translation: 'Ensalada',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -1044,7 +1044,7 @@ module.exports = {
       {
         wordId: 28,
         languageId: 3,
-        translation: 'フライドポテト',
+        translation: 'Papas fritas',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -1065,7 +1065,7 @@ module.exports = {
       {
         wordId: 29,
         languageId: 3,
-        translation: 'ステーキ',
+        translation: 'Filete',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -1086,7 +1086,7 @@ module.exports = {
       {
         wordId: 30,
         languageId: 3,
-        translation: 'スープ',
+        translation: 'Sopa',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -1107,7 +1107,7 @@ module.exports = {
       {
         wordId: 31,
         languageId: 3,
-        translation: 'フットボール',
+        translation: 'Fútbol',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -1128,7 +1128,7 @@ module.exports = {
       {
         wordId: 32,
         languageId: 3,
-        translation: 'バスケットボール',
+        translation: 'Baloncesto',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -1149,7 +1149,7 @@ module.exports = {
       {
         wordId: 33,
         languageId: 3,
-        translation: 'テニス',
+        translation: 'Tenis',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -1170,7 +1170,7 @@ module.exports = {
       {
         wordId: 34,
         languageId: 3,
-        translation: '野球',
+        translation: 'Béisbol',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -1191,7 +1191,7 @@ module.exports = {
       {
         wordId: 35,
         languageId: 3,
-        translation: 'サッカー',
+        translation: 'Fútbol',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -1212,7 +1212,7 @@ module.exports = {
       {
         wordId: 36,
         languageId: 3,
-        translation: 'ラグビー',
+        translation: 'Rugby',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -1233,7 +1233,7 @@ module.exports = {
       {
         wordId: 37,
         languageId: 3,
-        translation: 'クリケット',
+        translation: 'Críquet',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -1254,7 +1254,7 @@ module.exports = {
       {
         wordId: 38,
         languageId: 3,
-        translation: 'ゴルフ',
+        translation: 'Golf',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -1275,7 +1275,7 @@ module.exports = {
       {
         wordId: 39,
         languageId: 3,
-        translation: 'ホッケー',
+        translation: 'Hockey',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -1296,7 +1296,7 @@ module.exports = {
       {
         wordId: 40,
         languageId: 3,
-        translation: 'サイクリング',
+        translation: 'Ciclismo',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -1317,7 +1317,7 @@ module.exports = {
       {
         wordId: 41,
         languageId: 3,
-        translation: 'ギター',
+        translation: 'Guitarra',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -1338,7 +1338,7 @@ module.exports = {
       {
         wordId: 42,
         languageId: 3,
-        translation: 'ピアノ',
+        translation: 'Piano',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -1359,7 +1359,7 @@ module.exports = {
       {
         wordId: 43,
         languageId: 3,
-        translation: 'ドラム',
+        translation: 'Batería',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -1380,7 +1380,7 @@ module.exports = {
       {
         wordId: 44,
         languageId: 3,
-        translation: 'バイオリン',
+        translation: 'Violín',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -1401,7 +1401,7 @@ module.exports = {
       {
         wordId: 45,
         languageId: 3,
-        translation: 'フルート',
+        translation: 'Flauta',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -1422,7 +1422,7 @@ module.exports = {
       {
         wordId: 46,
         languageId: 3,
-        translation: 'トランペット',
+        translation: 'Trompeta',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -1443,7 +1443,7 @@ module.exports = {
       {
         wordId: 47,
         languageId: 3,
-        translation: 'サックス',
+        translation: 'Saxofón',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -1464,7 +1464,7 @@ module.exports = {
       {
         wordId: 48,
         languageId: 3,
-        translation: 'チェロ',
+        translation: 'Violonchelo',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -1485,7 +1485,7 @@ module.exports = {
       {
         wordId: 49,
         languageId: 3,
-        translation: 'クラリネット',
+        translation: 'Clarinete',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -1506,7 +1506,7 @@ module.exports = {
       {
         wordId: 50,
         languageId: 3,
-        translation: 'ハープ',
+        translation: 'Arpa',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -1527,7 +1527,7 @@ module.exports = {
       {
         wordId: 51,
         languageId: 3,
-        translation: 'アクション',
+        translation: 'Acción',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -1548,7 +1548,7 @@ module.exports = {
       {
         wordId: 52,
         languageId: 3,
-        translation: 'コメディ',
+        translation: 'Comedia',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -1569,7 +1569,7 @@ module.exports = {
       {
         wordId: 53,
         languageId: 3,
-        translation: 'ドラマ',
+        translation: 'Drama',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -1590,7 +1590,7 @@ module.exports = {
       {
         wordId: 54,
         languageId: 3,
-        translation: 'ホラー',
+        translation: 'Terror',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -1611,7 +1611,7 @@ module.exports = {
       {
         wordId: 55,
         languageId: 3,
-        translation: 'SF',
+        translation: 'Ciencia ficción',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -1632,7 +1632,7 @@ module.exports = {
       {
         wordId: 56,
         languageId: 3,
-        translation: 'ファンタジー',
+        translation: 'Fantasía',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -1653,7 +1653,7 @@ module.exports = {
       {
         wordId: 57,
         languageId: 3,
-        translation: 'ロマンス',
+        translation: 'Romance',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -1674,7 +1674,7 @@ module.exports = {
       {
         wordId: 58,
         languageId: 3,
-        translation: 'スリラー',
+        translation: 'Suspense',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -1695,7 +1695,7 @@ module.exports = {
       {
         wordId: 59,
         languageId: 3,
-        translation: 'ミステリー',
+        translation: 'Misterio',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -1716,7 +1716,7 @@ module.exports = {
       {
         wordId: 60,
         languageId: 3,
-        translation: 'ドキュメンタリー',
+        translation: 'Documental',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
