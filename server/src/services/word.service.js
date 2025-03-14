@@ -38,6 +38,7 @@ class WordService {
   }
 
   static async contextWord(id) {
+
     const translateWord = await Translation.findOne({
       where: {
         wordId: id,

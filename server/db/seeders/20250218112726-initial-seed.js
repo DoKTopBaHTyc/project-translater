@@ -16,11 +16,27 @@ module.exports = {
     ]);
 
     await queryInterface.bulkInsert('Languages', [
-
-      { name: 'en', title: 'English', createdAt: new Date(), updatedAt: new Date() },
-      { name: 'fr', title: 'French', createdAt: new Date(), updatedAt: new Date() },
-      { name: 'es', title: 'Spanish', createdAt: new Date(), updatedAt: new Date() },
-
+      {
+        name: 'en',
+        title: 'English',
+        img: '/image/England.png',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        name: 'fr',
+        title: 'French',
+        img: '/image/esp.png',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        name: 'es',
+        title: 'Spanish',
+        img: '/image/fr.png',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
     ]);
 
     await queryInterface.bulkInsert('Categories', [

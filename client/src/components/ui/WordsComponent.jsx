@@ -7,6 +7,12 @@ function WordsComponent({ user, deleteHandler, card }) {
   const [isDisabled, setIsDisabled] = useState(false);
   const { categoryId } = useParams();
   const [context, setContext] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
   useEffect(() => {
     const savedState = localStorage.getItem(`card_${card.id}_flipped`);
     if (savedState === 'true') {
@@ -16,25 +22,25 @@ function WordsComponent({ user, deleteHandler, card }) {
   }, [card.id]);
   const handleDelete = async () => {
     try {
-      await axiosInstance.delete(`/word/deleate/${card.id}`);
+      await axiosInstance.delete(`/word/delete/${card.id}`);
       deleteHandler(card.id);
     } catch (error) {
-      console.log(error)
+      console.log(error, '111111111111');
+      
     }
   };
 
   const contextHandle = () => {
     try {
-      axiosInstance.get(`/word/context/${card.id}`)
-      .then(({data}) => setContext(data))
-      .catch((err) => console.log(err))
-      if (response.status === 200) {
-        console.log('Данные успешно отправлены:', response.data);
-      }
+      axiosInstance
+        .get(`/word/context/${card.id}`)
+        .then(({ data }) => setContext(data.split('"')))
+        .catch((err) => console.log(err));
+      setIsModalOpen(true);
     } catch (error) {
       console.error('Ошибка при отправке данных:', error);
     }
-  }
+  };
 
   const handleClick = async () => {
     if (!isDisabled) {
@@ -69,7 +75,6 @@ function WordsComponent({ user, deleteHandler, card }) {
       style={{
         width: '150px',
         height: '150px',
-        perspective: '1000px',
         cursor: isDisabled ? 'default' : 'pointer',
       }}
     >
@@ -88,7 +93,6 @@ function WordsComponent({ user, deleteHandler, card }) {
             width: '100%',
             height: '100%',
             position: 'absolute',
-            backfaceVisibility: 'hidden',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -105,13 +109,11 @@ function WordsComponent({ user, deleteHandler, card }) {
           style={{
             width: '100%',
             height: '100%',
-            position: 'absolute',
             backfaceVisibility: 'hidden',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'space-between',
-            border: '1px solid #ccc',
             borderRadius: '10px',
             padding: '10px',
             boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
@@ -136,44 +138,91 @@ function WordsComponent({ user, deleteHandler, card }) {
               🔊
             </button>
           </div>
-          <div style={{ display: 'flex', gap: '10px', width: '100%', justifyContent: 'center' }}>
-          <button onClick={handleDelete}
+          <div
             style={{
-              background: '#ff4d4d',
-              border: 'none',
-              borderRadius: '5px',
-              padding: '5px 10px',
-              cursor: 'pointer',
-              fontSize: '14px',
-              color: '#fff',
-              transition: 'background 0.3s',
+              display: 'flex',
             }}
           >
-            Удалить
-          </button>
-          <button onClick={contextHandle}
-            style={{
-              background: '#4d79ff',
-              border: 'none',
-              borderRadius: '5px',
-              padding: '5px 10px',
-              cursor: 'pointer',
-              fontSize: '14px',
-              color: '#fff',
-              transition: 'background 0.3s',
-            }}
-          >
-            Контекст
-          </button>
+            <button
+              onClick={handleDelete}
+              style={{
+                background: '#ff4d4d',
+                border: 'none',
+                borderRadius: '5px',
+                cursor: 'pointer',
+                fontSize: '14px',
+                color: '#fff',
+              }}
+            >
+              Удалить
+            </button>
+            <button
+              onClick={contextHandle}
+              style={{
+                background: '#4d79ff',
+                border: 'none',
+                borderRadius: '5px',
+                padding: '5px 10px',
+                cursor: 'pointer',
+                fontSize: '14px',
+                color: '#fff',
+                transition: 'background 0.3s',
+              }}
+            >
+              Контекст
+            </button>
           </div>
         </div>
       </div>
-      <div>
-      {context[0]}
-      </div>
-      <div>
-        {context[1]}
-      </div>
+      {isModalOpen && (
+        <div
+          style={{
+            position: 'absolute',
+
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 1000,
+          }}
+          onClick={closeModal} // Закрыть модальное окно при клике вне его
+        >
+          <div
+            style={{
+              backgroundColor: '#fff',
+              padding: '20px',
+              borderRadius: '10px',
+              boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+              width: '250%', // Ширина модального окна (80% от ширины экрана)
+              maxWidth: '1000px', // Максимальная ширина
+              height: '150%', // Высота модального окна (80% от высоты экрана)
+              maxHeight: '600px', // Максимальная высота
+              textAlign: 'center',
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div style={{ overflowY: 'auto', height: '50%' }}>
+              <p>{context[1]}</p>
+              <p>{context[3]}</p>
+            </div>
+            <button
+              onClick={closeModal}
+              style={{
+                background: '#0044cc',
+                border: 'none',
+                borderRadius: '25px',
+                padding: '8px 16px',
+                cursor: 'pointer',
+                fontSize: '14px',
+                color: '#fff',
+                marginTop: '10px',
+              }}
+            >
+              Закрыть
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
