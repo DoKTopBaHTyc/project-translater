@@ -23,7 +23,7 @@ class WordController {
 
   static async deleateWord(req, res) {
     try {
-      const id = +req.params.id
+      const id = +req.params.id;
       const word = await WordService.deleateWord(id);
       res.status(200).json(word);
     } catch (error) {
@@ -34,7 +34,7 @@ class WordController {
 
   static async contextWord(req, res) {
     try {
-      const id = +req.params.id
+      const id = +req.params.id;
       const word = await WordService.contextWord(id);
       res.status(200).json(word);
     } catch (error) {
