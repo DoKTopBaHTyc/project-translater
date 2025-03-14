@@ -25,7 +25,8 @@ function WordsComponent({ user, deleteHandler, card }) {
       await axiosInstance.delete(`/word/delete/${card.id}`);
       deleteHandler(card.id);
     } catch (error) {
-      console.log(error);
+      console.log(error, '111111111111');
+      
     }
   };
 
